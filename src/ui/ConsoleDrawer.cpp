@@ -1,5 +1,5 @@
+#include <iostream>
 #include "ConsoleDrawer.h"
-
 #include "DrawableCharacters.h"
 #include "../environment/Grid.h"
 

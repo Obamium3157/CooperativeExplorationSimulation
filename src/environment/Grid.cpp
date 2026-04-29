@@ -1,13 +1,8 @@
-#include <iostream>
 #include <utility>
-
 #include "Grid.h"
-#include "../ui/ConsoleDrawer.h"
-#include "../ui/GUIDrawer.h"
 
-Grid::Grid(const unsigned int width, const unsigned int height, const DrawableVariant variant)
+Grid::Grid(const unsigned int width, const unsigned int height)
     : m_grid(width, std::vector<Cell>(height))
-    , m_drawable(MakeDrawable(variant))
 {
     for (unsigned int x = 0; x < width; ++x)
     {
@@ -18,9 +13,8 @@ Grid::Grid(const unsigned int width, const unsigned int height, const DrawableVa
     }
 }
 
-Grid::Grid(GridMatrix matrix, const DrawableVariant variant)
+Grid::Grid(GridMatrix matrix)
     : m_grid(std::move(matrix))
-    , m_drawable(MakeDrawable(variant))
 {
 }
 
@@ -47,19 +41,4 @@ unsigned int Grid::GetWidth() const
 unsigned int Grid::GetHeight() const
 {
     return m_grid[0].size();
-}
-
-void Grid::Render() const
-{
-    m_drawable->Draw(*this);
-}
-
-std::unique_ptr<IDrawable> Grid::MakeDrawable(const DrawableVariant variant)
-{
-    switch (variant)
-    {
-    case DrawableVariant::Console: return std::make_unique<ConsoleDrawer>(std::cout);
-    case DrawableVariant::GUI: return std::make_unique<GUIDrawer>();
-    default: return std::make_unique<ConsoleDrawer>(std::cout);
-    }
 }

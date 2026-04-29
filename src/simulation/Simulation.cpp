@@ -7,6 +7,8 @@
 
 #include "../exceptions/ReadGridException.h"
 #include "../ui/DrawableCharacters.h"
+#include "../ui/ConsoleDrawer.h"
+#include "../ui/GUIDrawer.h"
 
 namespace
 {
@@ -29,14 +31,15 @@ namespace
     }
 }
 
-Simulation::Simulation(const std::filesystem::path& filename,const DrawableVariant variant)
-    : m_map(Grid(LoadGridFromFile(filename), variant))
+Simulation::Simulation(const std::filesystem::path& filename, const DrawableVariant variant)
+    : m_drawable(MakeDrawable(variant))
+    , m_map(Grid(LoadGridFromFile(filename)))
 {
 }
 
 void Simulation::Run() const
 {
-    m_map.Render();
+    m_drawable->Draw(m_map);
 }
 
 GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)
@@ -70,4 +73,14 @@ GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)
     }
 
     return matrix;
+}
+
+std::unique_ptr<IDrawable> Simulation::MakeDrawable(const DrawableVariant variant)
+{
+    switch (variant)
+    {
+    case DrawableVariant::Console: return std::make_unique<ConsoleDrawer>(std::cout);
+    case DrawableVariant::GUI: return std::make_unique<GUIDrawer>();
+    default: return std::make_unique<ConsoleDrawer>(std::cout);
+    }
 }
