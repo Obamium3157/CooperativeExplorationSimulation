@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.2)
 project(CooperativeExplorationSimulation)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -21,7 +21,8 @@ add_executable(CooperativeExplorationSimulation src/main.cpp
         src/ui/ConsoleDrawer.cpp
         src/ui/GUIDrawer.cpp
         src/ui/GUIDrawer.h
-        src/simulaton/Simulation.cpp
-        src/simulaton/Simulation.h
+        src/simulation/Simulation.cpp
+        src/simulation/Simulation.h
         src/ui/DrawableCharacters.h
+        src/exceptions/ReadGridException.h
 )

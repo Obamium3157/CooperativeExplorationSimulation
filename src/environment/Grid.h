@@ -19,6 +19,7 @@ class Grid
 {
 public:
     Grid(unsigned int width, unsigned int height, DrawableVariant variant);
+    Grid(GridMatrix matrix, DrawableVariant variant);
 
     const GridMatrix& GetGridMatrix() const;
     Cell GetCell(unsigned int x, unsigned int y) const;

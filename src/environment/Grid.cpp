@@ -1,4 +1,5 @@
 #include <iostream>
+#include <utility>
 
 #include "Grid.h"
 #include "../ui/ConsoleDrawer.h"
@@ -15,6 +16,12 @@ Grid::Grid(const unsigned int width, const unsigned int height, const DrawableVa
             m_grid[y][x] = Cell{x, y, CellState::Unknown};
         }
     }
+}
+
+Grid::Grid(GridMatrix matrix, const DrawableVariant variant)
+    : m_grid(std::move(matrix))
+    , m_drawable(MakeDrawable(variant))
+{
 }
 
 const GridMatrix& Grid::GetGridMatrix() const
