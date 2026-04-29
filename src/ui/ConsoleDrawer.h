@@ -2,6 +2,7 @@
 #define COOPERATIVEEXPLORATIONSIMULATION_CONSOLEDRAWER_H
 
 #include <iosfwd>
+#include "../environment/CellState.h"
 #include "IDrawable.h"
 
 struct Cell;
@@ -18,5 +19,7 @@ private:
 
     std::ostream& m_out;
 };
+
+std::ostream& operator<<(std::ostream& os, const CellState& cellState);
 
 #endif //COOPERATIVEEXPLORATIONSIMULATION_CONSOLEDRAWER_H
