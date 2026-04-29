@@ -31,9 +31,10 @@ namespace
     }
 }
 
-Simulation::Simulation(const std::filesystem::path& filename, const DrawableVariant variant)
-    : m_drawable(MakeDrawable(variant))
-    , m_map(Grid(LoadGridFromFile(filename)))
+Simulation::Simulation(const std::filesystem::path& filename, const std::vector<Point>& agentPositions, DrawableVariant variant)
+    : m_map(Grid(LoadGridFromFile(filename)))
+    , m_context(std::make_unique<AgentContext>(m_map, agentPositions))
+    , m_drawable(MakeDrawable(variant))
 {
 }
 
@@ -54,7 +55,7 @@ GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)
     }
 
     std::string line;
-    unsigned int y = 0;
+    std::size_t y = 0;
     while (std::getline(file, line))
     {
         matrix.emplace_back();
@@ -67,7 +68,7 @@ GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)
             }
 
             auto state = GetSellStateByChar(ch);
-            matrix[y].emplace_back(Cell{static_cast<unsigned int>(x), y, state});
+            matrix[y].emplace_back(Cell{Point{static_cast<unsigned int>(x), y}, state});
         }
         y++;
     }

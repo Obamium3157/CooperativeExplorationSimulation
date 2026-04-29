@@ -1,0 +1,11 @@
+#ifndef COOPERATIVEEXPLORATIONSIMULATION_AGENTINITIALIZATIONEXCEPTION_H
+#define COOPERATIVEEXPLORATIONSIMULATION_AGENTINITIALIZATIONEXCEPTION_H
+#include <stdexcept>
+
+class AgentInitializationException : public std::runtime_error
+{
+public:
+    using std::runtime_error::runtime_error;
+};
+
+#endif //COOPERATIVEEXPLORATIONSIMULATION_AGENTINITIALIZATIONEXCEPTION_H

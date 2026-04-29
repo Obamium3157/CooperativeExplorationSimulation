@@ -1,12 +1,12 @@
 #include <utility>
 #include "Grid.h"
 
-Grid::Grid(const unsigned int width, const unsigned int height)
-    : m_grid(width, std::vector<Cell>(height))
+Grid::Grid(const Point& dimensions)
+    : m_grid(dimensions.x, std::vector<Cell>(dimensions.y))
 {
-    for (unsigned int x = 0; x < width; ++x)
+    for (std::size_t x = 0; x < dimensions.x; ++x)
     {
-        for (unsigned int y = 0; y < height; ++y)
+        for (std::size_t y = 0; y < dimensions.y; ++y)
         {
             m_grid[y][x] = Cell{x, y, CellState::Unknown};
         }
@@ -23,22 +23,17 @@ const GridMatrix& Grid::GetGridMatrix() const
     return m_grid;
 }
 
-Cell Grid::GetCell(const unsigned int x, const unsigned int y) const
+Cell Grid::GetCell(const Point& point) const
 {
-    return m_grid[y][x];
+    return m_grid[point.y][point.x];
 }
 
-void Grid::SetCell(const unsigned int x, const unsigned int y, const Cell& cell)
+void Grid::SetCell(const Point& point, const Cell& cell)
 {
-    m_grid[y][x] = cell;
+    m_grid[point.y][point.x] = cell;
 }
 
-unsigned int Grid::GetWidth() const
+Point Grid::GetDimensions() const
 {
-    return m_grid.size();
-}
-
-unsigned int Grid::GetHeight() const
-{
-    return m_grid[0].size();
+    return Point{m_grid.size(), m_grid[0].size()};
 }

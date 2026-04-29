@@ -10,8 +10,7 @@ ConsoleDrawer::ConsoleDrawer(std::ostream& out)
 
 void ConsoleDrawer::Draw(const Grid& grid)
 {
-    const unsigned int width = grid.GetWidth();
-    const unsigned int height = grid.GetHeight();
+    const auto [width, height] = grid.GetDimensions();
 
     DrawHorizontalBorder(width);
 
@@ -20,7 +19,7 @@ void ConsoleDrawer::Draw(const Grid& grid)
         m_out << DrawableCharacter::GridBorderVertical;
         for (unsigned int x = 0; x < width; ++x)
         {
-            DrawCell(grid.GetCell(x, y));
+            DrawCell(grid.GetCell(Point{x, y}));
         }
         m_out << DrawableCharacter::GridBorderVertical << '\n';
     }

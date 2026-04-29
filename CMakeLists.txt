@@ -27,4 +27,8 @@ add_executable(CooperativeExplorationSimulation src/main.cpp
         src/exceptions/ReadGridException.h
         src/agent/Agent.cpp
         src/agent/Agent.h
+        src/agent/AgentContext.cpp
+        src/agent/AgentContext.h
+        src/exceptions/AgentInitializationException.h
+        src/environment/Point.h
 )

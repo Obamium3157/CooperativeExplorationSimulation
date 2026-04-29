@@ -1,7 +1,8 @@
 #include "Agent.h"
 
-Agent::Agent(const unsigned int width, const unsigned int height, const Cell position)
-    : m_localBeliefMap(Grid(width, height))
+Agent::Agent(const Point& dimensions, const Cell& position, AgentContext& context)
+    : m_localBeliefMap(Grid(dimensions))
     , m_position(position)
+    , m_context(context)
 {
 }

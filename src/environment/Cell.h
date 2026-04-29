@@ -3,10 +3,11 @@
 
 #include "CellState.h"
 
+#include "Point.h"
+
 struct Cell
 {
-    unsigned int x = 0;
-    unsigned int y = 0;
+    Point position;
     CellState state = CellState::Unknown;
 };
 
