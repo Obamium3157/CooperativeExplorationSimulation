@@ -13,7 +13,6 @@ FetchContent_MakeAvailable(Catch2)
 
 add_executable(CooperativeExplorationSimulation src/main.cpp
         src/environment/CellState.h
-        src/environment/CellState.cpp
         src/environment/Cell.h
         src/environment/Grid.h
         src/environment/Grid.cpp
