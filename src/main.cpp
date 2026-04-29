@@ -1,6 +1,7 @@
-#include <iostream>
+#include "environment/Grid.h"
 
 int main()
 {
-    std::cout << "Hello, world!\n";
+    const Grid grid(10, 10, DrawableVariant::Console);
+    grid.Render();
 }
