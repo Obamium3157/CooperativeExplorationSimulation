@@ -22,4 +22,7 @@ add_executable(CooperativeExplorationSimulation src/main.cpp
         src/ui/ConsoleDrawer.cpp
         src/ui/GUIDrawer.cpp
         src/ui/GUIDrawer.h
+        src/simulaton/Simulation.cpp
+        src/simulaton/Simulation.h
+        src/ui/DrawableCharacters.h
 )

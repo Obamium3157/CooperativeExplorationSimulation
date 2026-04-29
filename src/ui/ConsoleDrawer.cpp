@@ -1,4 +1,6 @@
 #include "ConsoleDrawer.h"
+
+#include "DrawableCharacters.h"
 #include "../environment/Grid.h"
 
 ConsoleDrawer::ConsoleDrawer(std::ostream& out)
@@ -15,12 +17,12 @@ void ConsoleDrawer::Draw(const Grid& grid)
 
     for (unsigned int y = 0; y < height; ++y)
     {
-        m_out << '|';
+        m_out << DrawableCharacter::GridBorderVertical;
         for (unsigned int x = 0; x < width; ++x)
         {
             DrawCell(grid.GetCell(x, y));
         }
-        m_out << "|\n";
+        m_out << DrawableCharacter::GridBorderVertical << '\n';
     }
 
     DrawHorizontalBorder(width);
@@ -28,12 +30,12 @@ void ConsoleDrawer::Draw(const Grid& grid)
 
 void ConsoleDrawer::DrawHorizontalBorder(const unsigned int width) const
 {
-    m_out << '+';
+    m_out << DrawableCharacter::GridCorner;
     for (unsigned int i = 0; i < width; ++i)
     {
-        m_out << '-';
+        m_out << DrawableCharacter::GridBorderHorizontal;
     }
-    m_out << "+\n";
+    m_out << DrawableCharacter::GridCorner << '\n';
 }
 
 void ConsoleDrawer::DrawCell(const Cell& cell) const
