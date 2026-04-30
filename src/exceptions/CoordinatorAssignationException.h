@@ -1,0 +1,12 @@
+#ifndef COOPERATIVEEXPLORATIONSIMULATION_COORDINATORASSIGNATIONEXCEPTION_H
+#define COOPERATIVEEXPLORATIONSIMULATION_COORDINATORASSIGNATIONEXCEPTION_H
+
+#include <stdexcept>
+
+class CoordinatorAssignationException : public std::runtime_error
+{
+public:
+    using std::runtime_error::runtime_error;
+};
+
+#endif //COOPERATIVEEXPLORATIONSIMULATION_COORDINATORASSIGNATIONEXCEPTION_H

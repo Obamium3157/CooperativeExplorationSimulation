@@ -31,7 +31,7 @@ namespace
     }
 }
 
-Simulation::Simulation(const std::filesystem::path& filename, const std::vector<Point>& agentPositions, DrawableVariant variant)
+Simulation::Simulation(const std::filesystem::path& filename, const std::vector<Point>& agentPositions, const DrawableVariant variant)
     : m_map(Grid(LoadGridFromFile(filename)))
     , m_context(std::make_unique<AgentContext>(m_map, agentPositions))
     , m_drawable(MakeDrawable(variant))
@@ -41,6 +41,7 @@ Simulation::Simulation(const std::filesystem::path& filename, const std::vector<
 void Simulation::Run() const
 {
     m_drawable->Draw(m_map);
+    m_context->IterateOverAgents();
 }
 
 GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)

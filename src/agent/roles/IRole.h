@@ -1,0 +1,11 @@
+#ifndef COOPERATIVEEXPLORATIONSIMULATION_IROLE_H
+#define COOPERATIVEEXPLORATIONSIMULATION_IROLE_H
+
+class IRole
+{
+public:
+    virtual ~IRole() = default;
+    virtual void Act() = 0;
+};
+
+#endif //COOPERATIVEEXPLORATIONSIMULATION_IROLE_H
