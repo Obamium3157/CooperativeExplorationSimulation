@@ -16,6 +16,16 @@ Grid Agent::GetLocalBeliefMap() const
     return m_localBeliefMap;
 }
 
+std::optional<std::reference_wrapper<const Grid>> Agent::TryGetGlobalBeliefMap() const noexcept
+{
+    if (auto* coordinator = dynamic_cast<CoordinatorRole*>(m_role.get()))
+    {
+        return std::cref(coordinator->GetGlobalBeliefMap());
+    }
+
+    return std::nullopt;
+}
+
 void Agent::Act() const
 {
     m_role->Act();

@@ -10,7 +10,9 @@ class CoordinatorRole : public IRole
 {
 public:
     explicit CoordinatorRole(Agent& agent);
+
     void Act() override;
+    const Grid& GetGlobalBeliefMap();
 
 private:
     Agent& m_agent;

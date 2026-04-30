@@ -14,3 +14,8 @@ void CoordinatorRole::Act()
 {
     std::cout << "Hello I'm coordinator.\n";
 }
+
+const Grid& CoordinatorRole::GetGlobalBeliefMap()
+{
+    return m_globalBeliefMap;
+}

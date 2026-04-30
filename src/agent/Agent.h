@@ -19,6 +19,8 @@ public:
     explicit Agent(const Point& dimensions, const Cell& position, AgentContext& context, RoleVariant variant);
 
     Grid GetLocalBeliefMap() const;
+    std::optional<std::reference_wrapper<const Grid>> TryGetGlobalBeliefMap() const noexcept;
+
     void Act() const;
 
     void BecomeCoordinator();

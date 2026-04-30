@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <ranges>
 
+#include "../agent/Agent.h"
 #include "../exceptions/ReadGridException.h"
 #include "../ui/DrawableCharacters.h"
 #include "../ui/ConsoleDrawer.h"
@@ -42,6 +43,15 @@ void Simulation::Run() const
 {
     m_drawable->Draw(m_map);
     m_context->IterateOverAgents();
+
+    if (const auto coordinator = m_context->TryGetCoordinator(); coordinator)
+    {
+        if (const auto gbm_result = coordinator->TryGetGlobalBeliefMap(); gbm_result)
+        {
+            m_drawable->Draw(*gbm_result);
+        }
+    }
+
 }
 
 GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)

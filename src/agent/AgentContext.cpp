@@ -46,6 +46,18 @@ const Agent* AgentContext::TryGetAgent(const unsigned int id) const noexcept
     }
 }
 
+const Agent* AgentContext::TryGetCoordinator() const noexcept
+{
+    try
+    {
+        return GetCoordinator();
+    }
+    catch (...)
+    {
+        return nullptr;
+    }
+}
+
 void AgentContext::IterateOverAgents()
 {
     for (const auto& agent : m_agentById | std::views::values)
@@ -65,13 +77,32 @@ const Agent* AgentContext::GetAgent(const unsigned int id) const
     return it->second.get();
 }
 
+const Agent* AgentContext::GetCoordinator() const
+{
+    if (m_coordinatorId == std::nullopt)
+    {
+        throw std::out_of_range("Coordinator is not assigned");
+    }
+
+    auto it = m_agentById.find(m_coordinatorId.value());
+    if (it == m_agentById.end())
+    {
+        throw std::out_of_range("Coordinator with id " + std::to_string(m_coordinatorId.value()) + " not found");
+    }
+
+    return it->second.get();
+}
+
 void AgentContext::AssignCoordinator()
 {
-    const auto it = m_agentById.find(s_maxId - 1);
+    const unsigned int coordinatorId = s_maxId - 1;
+
+    const auto it = m_agentById.find(coordinatorId);
     if (it == m_agentById.end())
     {
         throw CoordinatorAssignationException("No agent with id " + std::to_string(s_maxId));
     }
 
     it->second->BecomeCoordinator();
+    m_coordinatorId = coordinatorId;
 }
