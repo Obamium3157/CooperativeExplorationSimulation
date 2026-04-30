@@ -2,11 +2,11 @@
 #include "Grid.h"
 
 Grid::Grid(const Point& dimensions)
-    : m_grid(dimensions.x, std::vector<Cell>(dimensions.y))
+    : m_grid(dimensions.y, std::vector<Cell>(dimensions.x))
 {
-    for (std::size_t x = 0; x < dimensions.x; ++x)
+    for (Coordinate y = 0; y < dimensions.y; ++y)
     {
-        for (std::size_t y = 0; y < dimensions.y; ++y)
+        for (Coordinate x = 0; x < dimensions.x; ++x)
         {
             m_grid[y][x] = Cell{x, y, CellState::Unknown};
         }
@@ -35,5 +35,5 @@ void Grid::SetCell(const Point& point, const Cell& cell)
 
 Point Grid::GetDimensions() const
 {
-    return Point{m_grid.size(), m_grid[0].size()};
+    return Point{m_grid[0].size(), m_grid.size()};
 }

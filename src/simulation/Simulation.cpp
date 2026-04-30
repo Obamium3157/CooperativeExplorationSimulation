@@ -6,6 +6,7 @@
 #include <ranges>
 
 #include "../agent/Agent.h"
+#include "../exceptions/AgentInitializationException.h"
 #include "../exceptions/ReadGridException.h"
 #include "../ui/DrawableCharacters.h"
 #include "../ui/ConsoleDrawer.h"
@@ -66,22 +67,51 @@ GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)
     }
 
     std::string line;
-    std::size_t y = 0;
+    Coordinate y = 0;
+    Coordinate expectedWidth = 0;
+
     while (std::getline(file, line))
     {
+        if (!line.empty() && line.back() == '\r')
+        {
+            line.pop_back();
+        }
+        if (line.empty())
+        {
+            continue;
+        }
+
         matrix.emplace_back();
-        std::istringstream lineStream(line);
-        for (auto [x, ch] : std::views::enumerate(line))
+        Coordinate col = 0;
+
+        for (const char ch : line)
         {
             if (std::isspace(ch))
             {
                 continue;
             }
 
-            auto state = GetSellStateByChar(ch);
-            matrix[y].emplace_back(Cell{Point{static_cast<unsigned int>(x), y}, state});
+            const auto state = GetSellStateByChar(ch);
+            matrix[y].emplace_back(Cell{Point{col, y}, state});
+            col++;
+        }
+
+        if (expectedWidth == 0)
+        {
+            expectedWidth = col;
+        }
+        else if (col != expectedWidth)
+        {
+            throw ReadGridException("Inconsistent row lengths at line " + std::to_string(y) +
+                "Expected: " + std::to_string(expectedWidth) +
+                ", Got: " + std::to_string(col));
         }
         y++;
+    }
+
+    if (matrix.empty())
+    {
+        throw ReadGridException("Grid file is empty or contains no valid cells.");
     }
 
     return matrix;

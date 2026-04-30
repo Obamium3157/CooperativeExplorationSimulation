@@ -7,6 +7,7 @@
 #include "../ui/IDrawable.h"
 
 class ReadGridException;
+class AgentInitializationException;
 
 enum class DrawableVariant
 {
@@ -17,7 +18,10 @@ enum class DrawableVariant
 class Simulation
 {
 public:
-    explicit Simulation(const std::filesystem::path& filename, const std::vector<Point>& agentPositions, DrawableVariant variant);
+    explicit Simulation(
+        const std::filesystem::path& filename,
+        const std::vector<Point>& agentPositions,
+        DrawableVariant variant);
 
     void Run() const;
 private:

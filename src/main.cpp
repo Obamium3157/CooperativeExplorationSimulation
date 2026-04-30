@@ -7,7 +7,15 @@ int main()
 {
     try
     {
-        const Simulation simulation("test_map1.txt", {Point{1, 1}, Point{2, 1}, Point{3, 1}, Point{4, 1}}, DrawableVariant::Console);
+        const Simulation simulation(
+            "test_map2.txt",
+            {
+                Point{1, 1},
+                Point{1, 1},
+                Point{1, 1},
+                Point{1, 1},
+            },
+            DrawableVariant::Console);
         simulation.Run();
     }
     catch (std::exception& e)
