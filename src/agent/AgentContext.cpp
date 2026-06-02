@@ -5,8 +5,6 @@
 #include "AgentContext.h"
 #include "Agent.h"
 
-unsigned int AgentContext::s_maxId = 0;
-
 AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPositions, const size_t coordinatorIndex)
 {
     if (coordinatorIndex >= agentPositions.size())
@@ -30,22 +28,24 @@ AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPosit
                 + ", which is occupied by an obstacle");
         }
 
+        const auto agentId = s_maxId++;
+
         if (i == coordinatorIndex)
         {
             auto coordinator = std::make_unique<Coordinator>(
-                dimensions, Cell{position, CellState::OccupiedByAgent}, *this);
+                agentId, dimensions, Cell{position, CellState::OccupiedByAgent}, *this);
             m_coordinator = coordinator.get();
-            m_agentById.emplace(s_maxId++, std::move(coordinator));
+            m_agentById.emplace(agentId, std::move(coordinator));
         }
         else
         {
-            m_agentById.emplace(s_maxId++,
-                std::make_unique<Agent>(dimensions, Cell{position, CellState::OccupiedByAgent}, *this));
+            m_agentById.emplace(agentId,
+                std::make_unique<Agent>(agentId, dimensions, Cell{position, CellState::OccupiedByAgent}, *this));
         }
     }
 }
 
-const Agent* AgentContext::TryGetAgent(const unsigned int id) const noexcept
+const Agent* AgentContext::TryGetAgent(const size_t id) const noexcept
 {
     try
     {
@@ -70,7 +70,7 @@ void AgentContext::IterateOverAgents()
     }
 }
 
-const Agent* AgentContext::GetAgent(const unsigned int id) const
+const Agent* AgentContext::GetAgent(const size_t id) const
 {
     const auto it = m_agentById.find(id);
     if (it == m_agentById.end())

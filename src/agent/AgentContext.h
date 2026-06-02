@@ -19,7 +19,7 @@ public:
     explicit AgentContext(const Grid& map, const std::vector<Point>& agentPositions, size_t coordinatorIndex);
     ~AgentContext() = default;
 
-    const Agent* TryGetAgent(unsigned int id) const noexcept;
+    const Agent* TryGetAgent(size_t id) const noexcept;
 
     const Coordinator* GetCoordinator() const noexcept;
 
@@ -29,10 +29,10 @@ private:
     /**
      * @throws std::out_of_range if there is no such agent
      */
-    const Agent* GetAgent(unsigned int id) const;
+    const Agent* GetAgent(size_t id) const;
 
-    static unsigned int s_maxId;
-    std::map<unsigned int, std::unique_ptr<Agent>> m_agentById;
+    static inline size_t s_maxId = 0;
+    std::map<size_t, std::unique_ptr<Agent>> m_agentById;
     Coordinator* m_coordinator = nullptr;
 };
 

@@ -6,7 +6,7 @@
 class Coordinator : public Agent
 {
 public:
-    explicit Coordinator(const Point& dimensions, const Cell& position, AgentContext& context);
+    explicit Coordinator(size_t id, const Point& dimensions, const Cell& position, AgentContext& context);
 
     void Act() const override;
     const Grid& GetGlobalBeliefMap() const;

@@ -7,24 +7,25 @@
 #include "../environment/Grid.h"
 
 
-using AgentId = size_t;
-
 class AgentContext;
 
 class Agent {
 public:
-    explicit Agent(const Point& dimensions, const Cell& position, AgentContext& context);
+    explicit Agent(size_t id, const Point& dimensions, const Cell& position, AgentContext& context);
     virtual ~Agent() = default;
 
-    const Grid& GetLocalBeliefMap() const;
+    size_t GetId() const noexcept;
+    const Grid& GetLocalBeliefMap() const noexcept;
+    const Cell& GetPosition() const noexcept;
 
     virtual void Act() const;
 
 private:
+    size_t m_id;
     Grid m_localBeliefMap;
+    Cell m_position;
 
 protected:
-    Cell m_position;
     AgentContext& m_context;
 };
 
