@@ -31,10 +31,7 @@ add_executable(CooperativeExplorationSimulation src/main.cpp
         src/agent/AgentContext.h
         src/exceptions/AgentInitializationException.h
         src/environment/Point.h
-        src/agent/roles/IRole.h
-        src/agent/roles/ExplorerRole.cpp
-        src/agent/roles/ExplorerRole.h
-        src/agent/roles/CoordinatorRole.cpp
-        src/agent/roles/CoordinatorRole.h
         src/exceptions/CoordinatorAssignationException.h
+        src/agent/Coordinator.cpp
+        src/agent/Coordinator.h
 )

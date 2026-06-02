@@ -35,7 +35,7 @@ namespace
 
 Simulation::Simulation(const std::filesystem::path& filename, const std::vector<Point>& agentPositions, const DrawableVariant variant)
     : m_map(Grid(LoadGridFromFile(filename)))
-    , m_context(std::make_unique<AgentContext>(m_map, agentPositions))
+    , m_context(std::make_unique<AgentContext>(m_map, agentPositions, agentPositions.size() - 1))
     , m_drawable(MakeDrawable(variant))
 {
 }
@@ -45,12 +45,9 @@ void Simulation::Run() const
     m_drawable->Draw(m_map);
     m_context->IterateOverAgents();
 
-    if (const auto coordinator = m_context->TryGetCoordinator(); coordinator)
+    if (const auto coordinator = m_context->GetCoordinator(); coordinator)
     {
-        if (const auto gbm_result = coordinator->TryGetGlobalBeliefMap(); gbm_result)
-        {
-            m_drawable->Draw(*gbm_result);
-        }
+        m_drawable->Draw(coordinator->GetGlobalBeliefMap());
     }
 
 }

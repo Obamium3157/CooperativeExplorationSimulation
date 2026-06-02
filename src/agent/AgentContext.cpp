@@ -7,31 +7,42 @@
 
 unsigned int AgentContext::s_maxId = 0;
 
-AgentContext::~AgentContext() = default;
-
-AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPositions)
+AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPositions, const size_t coordinatorIndex)
 {
+    if (coordinatorIndex >= agentPositions.size())
+    {
+        throw CoordinatorAssignationException(
+            "Coordinator index " + std::to_string(coordinatorIndex)
+            + " is out of range");
+    }
+
     const auto dimensions = map.GetDimensions();
 
-    auto createAndRegister = [&](auto agentPtr)
+    for (std::size_t i = 0; i < agentPositions.size(); ++i)
     {
-        m_agentById.emplace(s_maxId++, std::move(agentPtr));
-    };
+        const auto& position = agentPositions[i];
 
-    for (auto& agentPosition : agentPositions)
-    {
-        if (map.GetCell(agentPosition).state == CellState::Obstacle)
+        if (map.GetCell(position).state == CellState::Obstacle)
         {
             throw AgentInitializationException(
                 "Tried to place agent on the position "
-                + std::string(agentPosition)
+                + std::string(position)
                 + ", which is occupied by an obstacle");
         }
-        createAndRegister(std::make_unique<Agent>(dimensions, Cell{agentPosition, CellState::OccupiedByAgent}, *this,
-                                                  RoleVariant::Explorer));
-    }
 
-    AssignCoordinator();
+        if (i == coordinatorIndex)
+        {
+            auto coordinator = std::make_unique<Coordinator>(
+                dimensions, Cell{position, CellState::OccupiedByAgent}, *this);
+            m_coordinator = coordinator.get();
+            m_agentById.emplace(s_maxId++, std::move(coordinator));
+        }
+        else
+        {
+            m_agentById.emplace(s_maxId++,
+                std::make_unique<Agent>(dimensions, Cell{position, CellState::OccupiedByAgent}, *this));
+        }
+    }
 }
 
 const Agent* AgentContext::TryGetAgent(const unsigned int id) const noexcept
@@ -46,16 +57,9 @@ const Agent* AgentContext::TryGetAgent(const unsigned int id) const noexcept
     }
 }
 
-const Agent* AgentContext::TryGetCoordinator() const noexcept
+const Coordinator* AgentContext::GetCoordinator() const noexcept
 {
-    try
-    {
-        return GetCoordinator();
-    }
-    catch (...)
-    {
-        return nullptr;
-    }
+    return m_coordinator;
 }
 
 void AgentContext::IterateOverAgents()
@@ -75,34 +79,4 @@ const Agent* AgentContext::GetAgent(const unsigned int id) const
     }
 
     return it->second.get();
-}
-
-const Agent* AgentContext::GetCoordinator() const
-{
-    if (m_coordinatorId == std::nullopt)
-    {
-        throw std::out_of_range("Coordinator is not assigned");
-    }
-
-    auto it = m_agentById.find(m_coordinatorId.value());
-    if (it == m_agentById.end())
-    {
-        throw std::out_of_range("Coordinator with id " + std::to_string(m_coordinatorId.value()) + " not found");
-    }
-
-    return it->second.get();
-}
-
-void AgentContext::AssignCoordinator()
-{
-    const unsigned int coordinatorId = s_maxId - 1;
-
-    const auto it = m_agentById.find(coordinatorId);
-    if (it == m_agentById.end())
-    {
-        throw CoordinatorAssignationException("No agent with id " + std::to_string(s_maxId));
-    }
-
-    it->second->BecomeCoordinator();
-    m_coordinatorId = coordinatorId;
 }

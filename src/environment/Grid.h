@@ -10,7 +10,12 @@ class Grid
 {
 public:
     explicit Grid(const Point& dimensions);
-    explicit Grid(GridMatrix matrix);
+
+    explicit Grid(const GridMatrix& matrix);
+    explicit Grid(GridMatrix&& matrix);
+
+    Grid(const Grid& other) = default;
+    Grid(Grid&& other) = default;
 
     const GridMatrix& GetGridMatrix() const;
     Cell GetCell(const Point& point) const;

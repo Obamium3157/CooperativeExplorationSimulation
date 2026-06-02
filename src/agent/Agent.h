@@ -2,35 +2,30 @@
 #define COOPERATIVEEXPLORATIONSIMULATION_AGENT_H
 
 #include <memory>
+
 #include "../environment/Cell.h"
 #include "../environment/Grid.h"
-#include "roles/IRole.h"
 
-enum class RoleVariant
-{
-    Explorer,
-    Coordinator,
-};
+
+using AgentId = size_t;
 
 class AgentContext;
 
 class Agent {
 public:
-    explicit Agent(const Point& dimensions, const Cell& position, AgentContext& context, RoleVariant variant);
+    explicit Agent(const Point& dimensions, const Cell& position, AgentContext& context);
+    virtual ~Agent() = default;
 
-    Grid GetLocalBeliefMap() const;
-    std::optional<std::reference_wrapper<const Grid>> TryGetGlobalBeliefMap() const noexcept;
+    const Grid& GetLocalBeliefMap() const;
 
-    void Act() const;
+    virtual void Act() const;
 
-    void BecomeCoordinator();
 private:
-    std::unique_ptr<IRole> MakeRole(RoleVariant variant);
-
     Grid m_localBeliefMap;
+
+protected:
     Cell m_position;
     AgentContext& m_context;
-    std::unique_ptr<IRole> m_role;
 };
 
 #endif //COOPERATIVEEXPLORATIONSIMULATION_AGENT_H

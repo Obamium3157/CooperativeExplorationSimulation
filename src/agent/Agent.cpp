@@ -1,47 +1,20 @@
 #include "Agent.h"
 
-#include "roles/CoordinatorRole.h"
-#include "roles/ExplorerRole.h"
+#include <iostream>
 
-Agent::Agent(const Point& dimensions, const Cell& position, AgentContext& context, const RoleVariant variant)
+Agent::Agent(const Point& dimensions, const Cell& position, AgentContext& context)
     : m_localBeliefMap(Grid(dimensions))
     , m_position(position)
     , m_context(context)
-    , m_role(MakeRole(variant))
 {
 }
 
-Grid Agent::GetLocalBeliefMap() const
+const Grid& Agent::GetLocalBeliefMap() const
 {
     return m_localBeliefMap;
 }
 
-std::optional<std::reference_wrapper<const Grid>> Agent::TryGetGlobalBeliefMap() const noexcept
-{
-    if (auto* coordinator = dynamic_cast<CoordinatorRole*>(m_role.get()))
-    {
-        return std::cref(coordinator->GetGlobalBeliefMap());
-    }
-
-    return std::nullopt;
-}
-
 void Agent::Act() const
 {
-    m_role->Act();
-}
-
-void Agent::BecomeCoordinator()
-{
-    m_role = MakeRole(RoleVariant::Coordinator);
-}
-
-std::unique_ptr<IRole> Agent::MakeRole(const RoleVariant variant)
-{
-    switch (variant)
-    {
-    case RoleVariant::Explorer: return std::make_unique<ExplorerRole>(*this);
-    case RoleVariant::Coordinator: return std::make_unique<CoordinatorRole>(*this);
-    default: return std::make_unique<ExplorerRole>(*this);
-    }
+    std::cout << "Common agent things\n";
 }

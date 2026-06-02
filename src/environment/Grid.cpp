@@ -13,7 +13,12 @@ Grid::Grid(const Point& dimensions)
     }
 }
 
-Grid::Grid(GridMatrix matrix)
+Grid::Grid(const GridMatrix& matrix)
+    : m_grid(matrix)
+{
+}
+
+Grid::Grid(GridMatrix&& matrix)
     : m_grid(std::move(matrix))
 {
 }
@@ -35,5 +40,9 @@ void Grid::SetCell(const Point& point, const Cell& cell)
 
 Point Grid::GetDimensions() const
 {
+    if (m_grid.empty())
+    {
+        throw std::runtime_error("Grid matrix is empty");
+    }
     return Point{m_grid[0].size(), m_grid.size()};
 }
