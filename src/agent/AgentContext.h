@@ -20,8 +20,8 @@ public:
     ~AgentContext() = default;
 
     const Agent* TryGetAgent(size_t id) const noexcept;
-
     const Coordinator* GetCoordinator() const noexcept;
+    const Grid& GetMap() const noexcept;
 
     void IterateOverAgents();
 
@@ -32,8 +32,10 @@ private:
     const Agent* GetAgent(size_t id) const;
 
     static inline size_t s_maxId = 0;
+
     std::map<size_t, std::unique_ptr<Agent>> m_agentById;
     Coordinator* m_coordinator = nullptr;
+    const Grid& m_map;
 };
 
 #endif //COOPERATIVEEXPLORATIONSIMULATION_AGENTCONTEXT_H

@@ -5,7 +5,13 @@
 #include "AgentContext.h"
 #include "Agent.h"
 
+namespace
+{
+    constexpr double agentPerceptionRadius = 5.0;
+}
+
 AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPositions, const size_t coordinatorIndex)
+    : m_map(map)
 {
     if (coordinatorIndex >= agentPositions.size())
     {
@@ -33,14 +39,14 @@ AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPosit
         if (i == coordinatorIndex)
         {
             auto coordinator = std::make_unique<Coordinator>(
-                agentId, dimensions, Cell{position, CellState::OccupiedByAgent}, *this);
+                agentId, dimensions, Cell{position, CellState::OccupiedByAgent}, agentPerceptionRadius, *this);
             m_coordinator = coordinator.get();
             m_agentById.emplace(agentId, std::move(coordinator));
         }
         else
         {
             m_agentById.emplace(agentId,
-                std::make_unique<Agent>(agentId, dimensions, Cell{position, CellState::OccupiedByAgent}, *this));
+                std::make_unique<Agent>(agentId, dimensions, Cell{position, CellState::OccupiedByAgent}, agentPerceptionRadius, *this));
         }
     }
 }
@@ -60,6 +66,11 @@ const Agent* AgentContext::TryGetAgent(const size_t id) const noexcept
 const Coordinator* AgentContext::GetCoordinator() const noexcept
 {
     return m_coordinator;
+}
+
+const Grid& AgentContext::GetMap() const noexcept
+{
+    return m_map;
 }
 
 void AgentContext::IterateOverAgents()

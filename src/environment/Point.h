@@ -3,12 +3,10 @@
 
 #include <format>
 
-using Coordinate = std::size_t;
-
 struct Point
 {
-    Coordinate x = 0;
-    Coordinate y = 0;
+    size_t x = 0;
+    size_t y = 0;
 
     operator std::string() const
     {

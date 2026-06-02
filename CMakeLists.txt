@@ -34,4 +34,6 @@ add_executable(CooperativeExplorationSimulation src/main.cpp
         src/exceptions/CoordinatorAssignationException.h
         src/agent/Coordinator.cpp
         src/agent/Coordinator.h
+        src/environment/Perception.h
+        src/environment/Perception.cpp
 )

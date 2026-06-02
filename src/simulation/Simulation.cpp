@@ -48,6 +48,8 @@ void Simulation::Run() const
     if (const auto coordinator = m_context->GetCoordinator(); coordinator)
     {
         m_drawable->Draw(coordinator->GetGlobalBeliefMap());
+        std::cout << "\n";
+        m_drawable->Draw(coordinator->GetLocalBeliefMap());
     }
 
 }
@@ -64,8 +66,8 @@ GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)
     }
 
     std::string line;
-    Coordinate y = 0;
-    Coordinate expectedWidth = 0;
+    size_t y = 0;
+    size_t expectedWidth = 0;
 
     while (std::getline(file, line))
     {
@@ -79,7 +81,7 @@ GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)
         }
 
         matrix.emplace_back();
-        Coordinate col = 0;
+        size_t col = 0;
 
         for (const char ch : line)
         {

@@ -4,9 +4,9 @@
 Grid::Grid(const Point& dimensions)
     : m_grid(dimensions.y, std::vector<Cell>(dimensions.x))
 {
-    for (Coordinate y = 0; y < dimensions.y; ++y)
+    for (size_t y = 0; y < dimensions.y; ++y)
     {
-        for (Coordinate x = 0; x < dimensions.x; ++x)
+        for (size_t x = 0; x < dimensions.x; ++x)
         {
             m_grid[y][x] = Cell{x, y, CellState::Unknown};
         }

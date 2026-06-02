@@ -11,19 +11,22 @@ class AgentContext;
 
 class Agent {
 public:
-    explicit Agent(size_t id, const Point& dimensions, const Cell& position, AgentContext& context);
+    explicit Agent(size_t id, const Point& dimensions, const Cell& positionCell, double perceptionRadius, AgentContext& context);
     virtual ~Agent() = default;
 
     size_t GetId() const noexcept;
     const Grid& GetLocalBeliefMap() const noexcept;
     const Cell& GetPosition() const noexcept;
 
-    virtual void Act() const;
+    virtual void Act();
+
+    void Perceive();
 
 private:
     size_t m_id;
     Grid m_localBeliefMap;
-    Cell m_position;
+    Cell m_currentCell;
+    double m_perceptionRadius;
 
 protected:
     AgentContext& m_context;
