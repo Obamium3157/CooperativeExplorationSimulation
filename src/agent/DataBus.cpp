@@ -30,8 +30,24 @@ const std::optional<Grid>& DataBus::GetGbm() const noexcept
     return m_currentGbm;
 }
 
+void DataBus::SubmitTarget(const size_t agentId, const Point& target)
+{
+    m_pendingTargets.insert_or_assign(agentId, target);
+}
+
+std::optional<Point> DataBus::ReceiveTarget(const size_t agentId) const
+{
+    const auto it = m_pendingTargets.find(agentId);
+    if (it == m_pendingTargets.end())
+    {
+        return std::nullopt;
+    }
+    return it->second;
+}
+
 void DataBus::Reset()
 {
     m_pendingLbms.clear();
     m_currentGbm.reset();
+    m_pendingTargets.clear();
 }

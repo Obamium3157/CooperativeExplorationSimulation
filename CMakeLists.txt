@@ -73,7 +73,15 @@ add_executable(PathfindingTests
         src/environment/Frontier.cpp
         src/environment/Pathfinding.cpp)
 
+add_executable(DataBusTests
+    tests/DataBusTests.cpp
+    src/agent/DataBus.h
+    src/agent/DataBus.cpp
+    src/environment/Grid.h
+    src/environment/Grid.cpp)
+
 target_link_libraries(BresenhamPerceptionTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(MergeTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(FrontierTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(PathfindingTests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(DataBusTests PRIVATE Catch2::Catch2WithMain)

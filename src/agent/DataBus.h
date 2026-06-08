@@ -18,13 +18,16 @@ public:
     void BroadcastGbm(const Grid& gbm);
     const std::optional<Grid>& GetGbm() const noexcept;
 
+    void SubmitTarget(size_t agentId, const Point& target);
+    std::optional<Point> ReceiveTarget(size_t agentId) const;
+
     void Reset();
 
 private:
     size_t m_agentCount;
     std::unordered_map<size_t, Grid> m_pendingLbms;
     std::optional<Grid> m_currentGbm;
+    std::unordered_map<size_t, Point> m_pendingTargets;
 };
-
 
 #endif //COOPERATIVEEXPLORATIONSIMULATION_DATABUS_H
