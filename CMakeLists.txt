@@ -37,3 +37,9 @@ add_executable(CooperativeExplorationSimulation src/main.cpp
         src/environment/Perception.h
         src/environment/Perception.cpp
 )
+
+add_executable(BresenhamPerceptionTests tests/BresenhamPerceptionTests.cpp
+    src/environment/Grid.cpp
+    src/environment/Perception.cpp)
+
+target_link_libraries(BresenhamPerceptionTests PRIVATE Catch2::Catch2WithMain)

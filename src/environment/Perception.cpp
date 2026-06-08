@@ -21,12 +21,27 @@ namespace Perception
         while (x != targetX || y != targetY)
         {
             const int doubleError = 2 * error;
-            if (doubleError >= -dy)
+            const bool xStepped = doubleError >= -dy;
+            const bool yStepped = doubleError <= dx;
+
+            if (xStepped && yStepped)
+            {
+                const Point xOnly{static_cast<size_t>(x + stepX), static_cast<size_t>(y)};
+                const Point yOnly{static_cast<size_t>(x), static_cast<size_t>(y + stepY)};
+
+                if (grid.GetCell(xOnly).state == CellState::Obstacle &&
+                    grid.GetCell(yOnly).state == CellState::Obstacle)
+                {
+                    return false;
+                }
+            }
+
+            if (xStepped)
             {
                 error -= dy;
                 x += stepX;
             }
-            if (doubleError <= dx)
+            if (yStepped)
             {
                 error += dx;
                 y += stepY;
@@ -46,17 +61,17 @@ namespace Perception
         return true;
     }
 
-    std::vector<Cell> GetPerceivedCells(const Point& position, double radius, const Grid& realGrid)
+    std::vector<Cell> GetPerceivedCells(const Point& position, const double radius, const Grid& realGrid)
     {
         std::vector<Cell> result;
 
         const auto [width, height] = realGrid.GetDimensions();
         const int cx = static_cast<int>(position.x);
         const int cy = static_cast<int>(position.y);
-        const int r  = static_cast<int>(std::ceil(radius));
+        const int r = static_cast<int>(std::ceil(radius));
 
         const int xMin = std::max(0, cx - r);
-        const int xMax = std::min(static_cast<int>(width)  - 1, cx + r);
+        const int xMax = std::min(static_cast<int>(width) - 1, cx + r);
         const int yMin = std::max(0, cy - r);
         const int yMax = std::min(static_cast<int>(height) - 1, cy + r);
 

@@ -3,8 +3,8 @@
 
 namespace DrawableCharacter
 {
-    constexpr char Unknown = '.';
-    constexpr char Free = ' ';
+    constexpr char Unknown = '?';
+    constexpr char Free = '.';
     constexpr char Obstacle = '#';
     constexpr char Agent = 'o';
     constexpr char Coordinator = '@';
