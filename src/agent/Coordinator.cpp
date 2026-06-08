@@ -17,10 +17,16 @@ void Coordinator::SynchronizeGlobalMap()
     {
         m_globalBeliefMap.MergeFrom(lbm);
     }
+    m_frontiers = Frontier::ComputeFrontiers(m_globalBeliefMap);
     m_dataBus.BroadcastGbm(m_globalBeliefMap);
 }
 
 const Grid& Coordinator::GetGlobalBeliefMap() const noexcept
 {
     return m_globalBeliefMap;
+}
+
+const std::vector<Point>& Coordinator::GetFrontiers() const noexcept
+{
+    return m_frontiers;
 }
