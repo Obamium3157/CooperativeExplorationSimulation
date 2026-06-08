@@ -40,6 +40,8 @@ add_executable(CooperativeExplorationSimulation src/main.cpp
         src/agent/DataBus.h
         src/environment/Frontier.cpp
         src/environment/Frontier.h
+        src/environment/Pathfinding.cpp
+        src/environment/Pathfinding.h
 )
 
 add_executable(BresenhamPerceptionTests tests/BresenhamPerceptionTests.cpp
@@ -65,6 +67,13 @@ add_executable(FrontierTests
         src/agent/Coordinator.cpp
         src/agent/AgentContext.cpp)
 
+add_executable(PathfindingTests
+        tests/PathfindingTests.cpp
+        src/environment/Grid.cpp
+        src/environment/Frontier.cpp
+        src/environment/Pathfinding.cpp)
+
 target_link_libraries(BresenhamPerceptionTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(MergeTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(FrontierTests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(PathfindingTests PRIVATE Catch2::Catch2WithMain)
