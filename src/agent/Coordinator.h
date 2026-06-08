@@ -13,6 +13,7 @@ public:
                          double perceptionRadius, AgentContext& context, DataBus& dataBus);
 
     void SynchronizeGlobalMap();
+    void AssignTargets();
 
     const Grid& GetGlobalBeliefMap() const noexcept;
     const std::vector<Point>& GetFrontiers() const noexcept;

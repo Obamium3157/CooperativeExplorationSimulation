@@ -27,6 +27,8 @@ public:
     void Perceive();
 
 protected:
+    double GetPerceptionRadius() const noexcept;
+
     AgentContext& m_context;
     DataBus& m_dataBus;
 

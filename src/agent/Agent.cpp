@@ -58,3 +58,8 @@ void Agent::Perceive()
         m_localBeliefMap.SetCell(cell.position, cell);
     }
 }
+
+double Agent::GetPerceptionRadius() const noexcept
+{
+    return m_perceptionRadius;
+}
