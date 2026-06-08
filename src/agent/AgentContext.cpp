@@ -1,17 +1,20 @@
 #include <format>
 #include <ranges>
-#include "../exceptions/AgentInitializationException.h"
-#include "../exceptions/CoordinatorAssignationException.h"
+
 #include "AgentContext.h"
 #include "Agent.h"
+#include "../exceptions/AgentInitializationException.h"
+#include "../exceptions/CoordinatorAssignationException.h"
 
 namespace
 {
     constexpr double agentPerceptionRadius = 5.0;
 }
 
-AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPositions, const size_t coordinatorIndex)
-    : m_map(map)
+AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPositions,
+                           const size_t coordinatorIndex)
+    : m_dataBus(agentPositions.size())
+    , m_map(map)
 {
     if (coordinatorIndex >= agentPositions.size())
     {
@@ -22,7 +25,7 @@ AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPosit
 
     const auto dimensions = map.GetDimensions();
 
-    for (std::size_t i = 0; i < agentPositions.size(); ++i)
+    for (size_t i = 0; i < agentPositions.size(); ++i)
     {
         const auto& position = agentPositions[i];
 
@@ -39,14 +42,16 @@ AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPosit
         if (i == coordinatorIndex)
         {
             auto coordinator = std::make_unique<Coordinator>(
-                agentId, dimensions, Cell{position, CellState::OccupiedByAgent}, agentPerceptionRadius, *this);
+                agentId, dimensions, Cell{position, CellState::OccupiedByAgent},
+                agentPerceptionRadius, *this, m_dataBus);
             m_coordinator = coordinator.get();
             m_agentById.emplace(agentId, std::move(coordinator));
         }
         else
         {
             m_agentById.emplace(agentId,
-                std::make_unique<Agent>(agentId, dimensions, Cell{position, CellState::OccupiedByAgent}, agentPerceptionRadius, *this));
+                std::make_unique<Agent>(agentId, dimensions, Cell{position, CellState::OccupiedByAgent},
+                agentPerceptionRadius, *this, m_dataBus));
         }
     }
 }
@@ -75,9 +80,33 @@ const Grid& AgentContext::GetMap() const noexcept
 
 void AgentContext::IterateOverAgents()
 {
+    PerceiveAll();
+    SynchronizeGlobalBeliefMap();
+    DistributeGlobalBeliefMap();
+    m_dataBus.Reset();
+}
+
+void AgentContext::PerceiveAll()
+{
     for (const auto& agent : m_agentById | std::views::values)
     {
         agent->Act();
+    }
+}
+
+void AgentContext::SynchronizeGlobalBeliefMap()
+{
+    m_coordinator->SynchronizeGlobalMap();
+}
+
+void AgentContext::DistributeGlobalBeliefMap()
+{
+    for (const auto& agent : m_agentById | std::views::values)
+    {
+        if (agent.get() != m_coordinator)
+        {
+            agent->ApplyGbm();
+        }
     }
 }
 

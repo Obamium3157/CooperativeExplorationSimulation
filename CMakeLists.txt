@@ -36,10 +36,22 @@ add_executable(CooperativeExplorationSimulation src/main.cpp
         src/agent/Coordinator.h
         src/environment/Perception.h
         src/environment/Perception.cpp
+        src/agent/DataBus.cpp
+        src/agent/DataBus.h
 )
 
 add_executable(BresenhamPerceptionTests tests/BresenhamPerceptionTests.cpp
     src/environment/Grid.cpp
     src/environment/Perception.cpp)
 
+add_executable(MergeTests
+        tests/MergeTests.cpp
+        src/environment/Grid.cpp
+        src/environment/Perception.cpp
+        src/agent/DataBus.cpp
+        src/agent/Agent.cpp
+        src/agent/Coordinator.cpp
+        src/agent/AgentContext.cpp)
+
 target_link_libraries(BresenhamPerceptionTests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(MergeTests PRIVATE Catch2::Catch2WithMain)

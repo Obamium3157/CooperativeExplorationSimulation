@@ -5,18 +5,22 @@
 #include <memory>
 
 #include "Coordinator.h"
+#include "DataBus.h"
 #include "../environment/Grid.h"
 
 class Agent;
 class AgentInitializationException;
 class CoordinatorAssignationException;
 
-class AgentContext {
+class AgentContext
+{
 public:
     /**
      * @throws AgentInitializationException
+     * @throws CoordinatorAssignationException
      */
-    explicit AgentContext(const Grid& map, const std::vector<Point>& agentPositions, size_t coordinatorIndex);
+    explicit AgentContext(const Grid& map, const std::vector<Point>& agentPositions,
+                          size_t coordinatorIndex);
     ~AgentContext() = default;
 
     const Agent* TryGetAgent(size_t id) const noexcept;
@@ -26,13 +30,18 @@ public:
     void IterateOverAgents();
 
 private:
+    void PerceiveAll();
+    void SynchronizeGlobalBeliefMap();
+    void DistributeGlobalBeliefMap();
+
     /**
-     * @throws std::out_of_range if there is no such agent
+     * @throws std::out_of_range if there is no agent with the given id
      */
     const Agent* GetAgent(size_t id) const;
 
     static inline size_t s_maxId = 0;
 
+    DataBus m_dataBus;
     std::map<size_t, std::unique_ptr<Agent>> m_agentById;
     Coordinator* m_coordinator = nullptr;
     const Grid& m_map;

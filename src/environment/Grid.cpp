@@ -46,3 +46,22 @@ Point Grid::GetDimensions() const
     }
     return Point{m_grid[0].size(), m_grid.size()};
 }
+
+void Grid::MergeFrom(const Grid& other)
+{
+    const auto [width, height] = GetDimensions();
+
+    for (size_t y = 0; y < height; ++y)
+    {
+        for (size_t x = 0; x < width; ++x)
+        {
+            const Point point{x, y};
+            const Cell otherCell = other.GetCell(point);
+
+            if (otherCell.state != CellState::Unknown)
+            {
+                SetCell(point, otherCell);
+            }
+        }
+    }
+}
