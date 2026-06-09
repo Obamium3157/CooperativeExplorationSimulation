@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "environment/Grid.h"
 #include "simulation/Simulation.h"
 
 int main()

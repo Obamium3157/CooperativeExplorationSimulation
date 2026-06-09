@@ -51,6 +51,70 @@ namespace
         std::reverse(path.begin(), path.end());
         return path;
     }
+
+    size_t RunAStar(const Point& from, const Point& to, const Grid& beliefMap,
+                    std::vector<size_t>& gScore, std::vector<size_t>* cameFrom)
+    {
+        const auto [width, height] = beliefMap.GetDimensions();
+        const Point dimensions{width, height};
+        const size_t totalCells = width * height;
+
+        gScore.assign(totalCells, SIZE_MAX);
+        if (cameFrom != nullptr)
+        {
+            cameFrom->assign(totalCells, SIZE_MAX);
+        }
+        std::vector<bool> closed(totalCells, false);
+
+        std::priority_queue<OpenNode, std::vector<OpenNode>, std::greater<>> openSet;
+        gScore[ToFlatIndex(from, width)] = 0;
+        openSet.push({ManhattanDistance(from, to), from});
+
+        while (!openSet.empty())
+        {
+            const auto [f, current] = openSet.top();
+            openSet.pop();
+
+            const size_t currentIndex = ToFlatIndex(current, width);
+            if (closed[currentIndex])
+            {
+                continue;
+            }
+            closed[currentIndex] = true;
+
+            if (current.x == to.x && current.y == to.y)
+            {
+                return currentIndex;
+            }
+
+            for (const Point& neighbor : Frontier::OrthogonalNeighbors(current, dimensions))
+            {
+                if (!IsTraversable(neighbor, beliefMap))
+                {
+                    continue;
+                }
+
+                const size_t neighborIndex = ToFlatIndex(neighbor, width);
+                if (closed[neighborIndex])
+                {
+                    continue;
+                }
+
+                const size_t tentativeG = gScore[currentIndex] + 1;
+                if (tentativeG < gScore[neighborIndex])
+                {
+                    gScore[neighborIndex] = tentativeG;
+                    if (cameFrom)
+                    {
+                        (*cameFrom)[neighborIndex] = currentIndex;
+                    }
+                    openSet.push({tentativeG + ManhattanDistance(neighbor, to), neighbor});
+                }
+            }
+        }
+
+        return SIZE_MAX;
+    }
 }
 
 
@@ -64,72 +128,34 @@ namespace Pathfinding
             return std::vector{from};
         }
 
-        const auto [width, height] = beliefMap.GetDimensions();
-        const Point dimensions{width, height};
-        const size_t totalCells = width * height;
+        const size_t width = beliefMap.GetDimensions().x;
+        std::vector<size_t> gScore;
+        std::vector<size_t> cameFrom;
 
-        std::vector gScore(totalCells, SIZE_MAX);
-        std::vector cameFrom(totalCells, SIZE_MAX);
-        std::vector closed(totalCells, false);
-
-        std::priority_queue<OpenNode, std::vector<OpenNode>, std::greater<>> openSet;
-
-        gScore[ToFlatIndex(from, width)] = 0;
-        openSet.push({ManhattanDistance(from, to), from});
-
-        while (!openSet.empty())
+        const size_t targetIndex = RunAStar(from, to, beliefMap, gScore, &cameFrom);
+        if (targetIndex == SIZE_MAX)
         {
-            const auto [f, current] = openSet.top();
-            openSet.pop();
-
-            const size_t currentIndex = ToFlatIndex(current, width);
-
-            if (closed[currentIndex])
-            {
-                continue;
-            }
-            closed[currentIndex] = true;
-
-            if (current.x == to.x && current.y == to.y)
-            {
-                return ReconstructPath(cameFrom, currentIndex, width);
-            }
-
-            for (const Point& neighbor : Frontier::OrthogonalNeighbors(current, dimensions))
-            {
-                if (!IsTraversable(neighbor, beliefMap))
-                {
-                    continue;
-                }
-
-                const size_t neighborIndex = ToFlatIndex(neighbor, width);
-
-                if (closed[neighborIndex])
-                {
-                    continue;
-                }
-
-                const size_t tentativeG = gScore[currentIndex] + 1;
-                if (tentativeG < gScore[neighborIndex])
-                {
-                    gScore[neighborIndex] = tentativeG;
-                    cameFrom[neighborIndex] = currentIndex;
-                    openSet.push({tentativeG + ManhattanDistance(neighbor, to), neighbor});
-                }
-            }
+            return std::nullopt;
         }
 
-        return std::nullopt;
+        return ReconstructPath(cameFrom, targetIndex, width);
     }
 
     std::optional<size_t> FindPathLength(const Point& from, const Point& to,
                                          const Grid& beliefMap)
     {
-        const auto path = FindPath(from, to, beliefMap);
-        if (!path.has_value())
+        if (from.x == to.x && from.y == to.y)
+        {
+            return 0;
+        }
+
+        std::vector<size_t> gScore;
+        const size_t targetIndex = RunAStar(from, to, beliefMap, gScore, nullptr);
+        if (targetIndex == SIZE_MAX)
         {
             return std::nullopt;
         }
-        return path->size() - 1;
+
+        return gScore[targetIndex];
     }
 }

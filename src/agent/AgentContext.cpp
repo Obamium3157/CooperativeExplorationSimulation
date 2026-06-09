@@ -82,7 +82,10 @@ void AgentContext::IterateOverAgents()
 {
     PerceiveAll();
     SynchronizeGlobalBeliefMap();
+    AssignTargets();
     DistributeGlobalBeliefMap();
+    DistributeTargets();
+    MoveAllToTargets();
     m_dataBus.Reset();
 }
 
@@ -99,15 +102,54 @@ void AgentContext::SynchronizeGlobalBeliefMap()
     m_coordinator->SynchronizeGlobalMap();
 }
 
+void AgentContext::AssignTargets()
+{
+    m_coordinator->AssignTargets();
+}
+
 void AgentContext::DistributeGlobalBeliefMap()
 {
     for (const auto& agent : m_agentById | std::views::values)
     {
-        if (agent.get() != m_coordinator)
+        agent->ApplyGbm();
+    }
+}
+
+void AgentContext::DistributeTargets()
+{
+    m_pendingAgentCount = 0;
+    for (const auto& agent : m_agentById | std::views::values)
+    {
+        agent->ReceiveAndPlanTarget();
+        if (!agent->HasArrived())
         {
-            agent->ApplyGbm();
+            ++m_pendingAgentCount;
         }
     }
+}
+
+void AgentContext::MoveAllToTargets()
+{
+    while (m_pendingAgentCount > 0)
+    {
+        for (const auto& agent : m_agentById | std::views::values)
+        {
+            if (agent->HasArrived())
+            {
+                continue;
+            }
+            agent->Step();
+            if (agent->HasArrived())
+            {
+                --m_pendingAgentCount;
+            }
+        }
+    }
+}
+
+bool AgentContext::AllAgentsArrived() const
+{
+    return m_pendingAgentCount == 0;
 }
 
 const Agent* AgentContext::GetAgent(const size_t id) const

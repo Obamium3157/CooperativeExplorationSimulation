@@ -75,11 +75,14 @@ namespace
             size_t minDist = SIZE_MAX;
             for (const Point& f : frontiers)
             {
-                minDist = std::min(minDist, ManhattanDistance(pos, f));
-            }
-            for (const Point& f : frontiers)
-            {
-                if (ManhattanDistance(pos, f) == minDist)
+                const size_t dist = ManhattanDistance(pos, f);
+                if (dist < minDist)
+                {
+                    minDist = dist;
+                    candidates[agentId].clear();
+                    candidates[agentId].push_back(f);
+                }
+                else if (dist == minDist)
                 {
                     candidates[agentId].push_back(f);
                 }
@@ -357,9 +360,9 @@ Coordinator::Coordinator(const size_t id, const Point& dimensions, const Cell& p
 
 void Coordinator::SynchronizeGlobalMap()
 {
-    for (const auto& lbm : m_dataBus.GetPendingLbms() | std::views::values)
+    for (const Grid* lbm : m_dataBus.GetPendingLbms() | std::views::values)
     {
-        m_globalBeliefMap.MergeFrom(lbm);
+        m_globalBeliefMap.MergeFrom(*lbm);
     }
     m_frontiers = Frontier::ComputeFrontiers(m_globalBeliefMap);
     m_dataBus.BroadcastGbm(m_globalBeliefMap);

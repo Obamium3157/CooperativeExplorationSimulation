@@ -1,9 +1,8 @@
 #include "Agent.h"
 
-#include <iostream>
-
 #include "AgentContext.h"
 #include "DataBus.h"
+#include "../environment/Pathfinding.h"
 #include "../environment/Perception.h"
 
 Agent::Agent(const size_t id, const Point& dimensions, const Cell& positionCell,
@@ -32,6 +31,11 @@ const Cell& Agent::GetPosition() const noexcept
     return m_currentCell;
 }
 
+bool Agent::HasArrived() const noexcept
+{
+    return m_hasArrived;
+}
+
 void Agent::Act()
 {
     Perceive();
@@ -40,12 +44,53 @@ void Agent::Act()
 
 void Agent::ApplyGbm()
 {
-    const auto& gbm = m_dataBus.GetGbm();
-    if (!gbm.has_value())
+    const Grid* gbm = m_dataBus.GetGbm();
+    if (!gbm)
     {
         return;
     }
     m_localBeliefMap.MergeFrom(*gbm);
+}
+
+void Agent::ReceiveAndPlanTarget()
+{
+    const auto target = m_dataBus.ReceiveTarget(m_id);
+    if (!target.has_value())
+    {
+        m_hasArrived = true;
+        m_currentPath.clear();
+        return;
+    }
+
+    auto path = Pathfinding::FindPath(m_currentCell.position, *target, m_localBeliefMap);
+    if (!path.has_value() || path->size() <= 1)
+    {
+        m_hasArrived = true;
+        m_currentPath.clear();
+        return;
+    }
+
+    m_currentPath.assign(path->begin() + 1, path->end());
+    std::reverse(m_currentPath.begin(), m_currentPath.end());
+    m_hasArrived = false;
+}
+
+void Agent::Step()
+{
+    if (m_hasArrived)
+    {
+        return;
+    }
+
+    m_currentCell.position = m_currentPath.back();
+    m_currentPath.pop_back();
+
+    Perceive();
+
+    if (m_currentPath.empty())
+    {
+        m_hasArrived = true;
+    }
 }
 
 void Agent::Perceive()

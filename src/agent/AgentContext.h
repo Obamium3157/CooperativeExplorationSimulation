@@ -32,7 +32,11 @@ public:
 private:
     void PerceiveAll();
     void SynchronizeGlobalBeliefMap();
+    void AssignTargets();
     void DistributeGlobalBeliefMap();
+    void DistributeTargets();
+    void MoveAllToTargets();
+    bool AllAgentsArrived() const;
 
     /**
      * @throws std::out_of_range if there is no agent with the given id
@@ -45,6 +49,8 @@ private:
     std::map<size_t, std::unique_ptr<Agent>> m_agentById;
     Coordinator* m_coordinator = nullptr;
     const Grid& m_map;
+
+    size_t m_pendingAgentCount = 0;
 };
 
 #endif //COOPERATIVEEXPLORATIONSIMULATION_AGENTCONTEXT_H
