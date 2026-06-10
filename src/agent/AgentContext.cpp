@@ -83,6 +83,18 @@ size_t AgentContext::GetSimulationTime() const noexcept
     return m_simulationTime;
 }
 
+std::vector<std::pair<Point, bool>> AgentContext::GetAgentInfos() const
+{
+    std::vector<std::pair<Point, bool>> infos;
+    infos.reserve(m_agentById.size());
+    for (const auto& agent : m_agentById | std::views::values)
+    {
+        const bool isCoordinator = (agent.get() == m_coordinator);
+        infos.emplace_back(agent->GetPosition().position, isCoordinator);
+    }
+    return infos;
+}
+
 void AgentContext::IterateOverAgents()
 {
     PerceiveAll();

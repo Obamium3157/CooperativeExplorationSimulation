@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include "ConsoleDrawer.h"
 #include "DrawableCharacters.h"
@@ -8,7 +9,8 @@ ConsoleDrawer::ConsoleDrawer(std::ostream& out)
 {
 }
 
-void ConsoleDrawer::Draw(const Grid& grid)
+void ConsoleDrawer::Draw(const Grid& grid,
+                         const std::vector<std::pair<Point, char>>& agentOverlay)
 {
     const auto [width, height] = grid.GetDimensions();
 
@@ -19,7 +21,19 @@ void ConsoleDrawer::Draw(const Grid& grid)
         m_out << DrawableCharacter::GridBorderVertical;
         for (unsigned int x = 0; x < width; ++x)
         {
-            DrawCell(grid.GetCell(Point{x, y}));
+            const Point currentPoint{x, y};
+            const auto agentIt = std::find_if(
+                agentOverlay.begin(), agentOverlay.end(),
+                [&currentPoint](const auto& entry) { return entry.first == currentPoint; });
+
+            if (agentIt != agentOverlay.end())
+            {
+                m_out << agentIt->second;
+            }
+            else
+            {
+                DrawCell(grid.GetCell(currentPoint));
+            }
         }
         m_out << DrawableCharacter::GridBorderVertical << '\n';
     }

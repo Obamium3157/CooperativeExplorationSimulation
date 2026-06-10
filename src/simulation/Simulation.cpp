@@ -45,17 +45,17 @@ void Simulation::Run() const
     m_context->IterateOverAgents();
     while (!m_context->GetCoordinator()->GetFrontiers().empty())
     {
-        // m_drawable->Draw(m_map);
         if (const auto coordinator = m_context->GetCoordinator(); coordinator)
         {
-            m_drawable->Draw(coordinator->GetGlobalBeliefMap());
+            const auto agentOverlay = BuildAgentOverlay();
+            m_drawable->Draw(coordinator->GetGlobalBeliefMap(), agentOverlay);
             std::cout << "\n";
         }
 
         m_context->IterateOverAgents();
     }
 
-    std::cout << "Total time: " << m_context->GetSimulationTime() << "\n";
+    std::cout << "Simulation finished. Total time: " << m_context->GetSimulationTime() << "\n";
 }
 
 GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)
@@ -128,4 +128,22 @@ std::unique_ptr<IDrawable> Simulation::MakeDrawable(const DrawableVariant varian
     case DrawableVariant::GUI: return std::make_unique<GUIDrawer>();
     default: return std::make_unique<ConsoleDrawer>(std::cout);
     }
+}
+
+std::vector<std::pair<Point, char>> Simulation::BuildAgentOverlay() const
+{
+    const auto agentInfos = m_context->GetAgentInfos();
+
+    std::vector<std::pair<Point, char>> overlay;
+    overlay.reserve(agentInfos.size());
+
+    for (const auto& [position, isCoordinator] : agentInfos)
+    {
+        const char symbol = isCoordinator
+            ? DrawableCharacter::Coordinator
+            : DrawableCharacter::Agent;
+        overlay.emplace_back(position, symbol);
+    }
+
+    return overlay;
 }

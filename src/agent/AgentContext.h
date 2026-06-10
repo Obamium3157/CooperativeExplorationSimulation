@@ -3,6 +3,8 @@
 
 #include <map>
 #include <memory>
+#include <utility>
+#include <vector>
 
 #include "Coordinator.h"
 #include "DataBus.h"
@@ -27,6 +29,7 @@ public:
     const Coordinator* GetCoordinator() const noexcept;
     const Grid& GetMap() const noexcept;
     size_t GetSimulationTime() const noexcept;
+    std::vector<std::pair<Point, bool>> GetAgentInfos() const;
 
     void IterateOverAgents();
 
