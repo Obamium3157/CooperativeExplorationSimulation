@@ -18,19 +18,6 @@ namespace
     using PathLengthMap = std::unordered_map<size_t, size_t>;
     using Assignment = std::unordered_map<size_t, Point>;
 
-    size_t ManhattanDistance(const Point& a, const Point& b) noexcept
-    {
-        const size_t dx = a.x > b.x ? a.x - b.x : b.x - a.x;
-        const size_t dy = a.y > b.y ? a.y - b.y : b.y - a.y;
-
-        return dx + dy;
-    }
-
-    bool PointsEqual(const Point& a, const Point& b) noexcept
-    {
-        return a.x == b.x && a.y == b.y;
-    }
-
     double PolygonArea(std::vector<Point> points)
     {
         const size_t n = points.size();
@@ -95,7 +82,7 @@ namespace
             for (const auto& [agentId, cands] : candidates)
             {
                 if (std::any_of(cands.begin(), cands.end(),
-                                [&f](const Point& p) { return PointsEqual(p, f); }))
+                                [&f](const Point& p) { return f == p; }))
                 {
                     claimants.push_back(agentId);
                 }
@@ -123,7 +110,7 @@ namespace
                 auto& cands = candidates[loser];
                 cands.erase(
                     std::remove_if(cands.begin(), cands.end(),
-                                   [&f](const Point& p) { return PointsEqual(p, f); }),
+                                   [&f](const Point& p) { return f == p; }),
                     cands.end());
             }
         }

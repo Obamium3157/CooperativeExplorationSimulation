@@ -9,13 +9,6 @@
 
 namespace
 {
-    size_t ManhattanDistance(const Point& a, const Point& b) noexcept
-    {
-        const size_t dx = a.x > b.x ? a.x - b.x : b.x - a.x;
-        const size_t dy = a.y > b.y ? a.y - b.y : b.y - a.y;
-        return dx + dy;
-    }
-
     size_t ToFlatIndex(const Point& point, const size_t width) noexcept
     {
         return point.y * width + point.x;
