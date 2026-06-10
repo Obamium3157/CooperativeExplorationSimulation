@@ -107,6 +107,10 @@ namespace
                 {
                     continue;
                 }
+                if (positions.at(loser) == positions.at(winner))
+                {
+                    continue;
+                }
                 auto& cands = candidates[loser];
                 cands.erase(
                     std::remove_if(cands.begin(), cands.end(),
@@ -195,6 +199,7 @@ namespace
 
         std::vector<size_t> indices(n, 0);
         double bestArea = -1.0;
+        size_t bestDistinctCount = 0;
         Assignment bestAssignment;
 
         while (true)
@@ -207,9 +212,32 @@ namespace
             }
 
             const double area = PolygonArea(combination);
-            if (area > bestArea)
+
+            size_t distinctCount = 0;
+            for (size_t i = 0; i < n; ++i)
+            {
+                bool isDuplicate = false;
+                for (size_t j = 0; j < i; ++j)
+                {
+                    if (combination[i] == combination[j])
+                    {
+                        isDuplicate = true;
+                        break;
+                    }
+                }
+                if (!isDuplicate)
+                {
+                    ++distinctCount;
+                }
+            }
+
+            const bool isBetter = area > bestArea
+                || (area == bestArea && distinctCount > bestDistinctCount);
+
+            if (isBetter)
             {
                 bestArea = area;
+                bestDistinctCount = distinctCount;
                 bestAssignment.clear();
                 for (size_t i = 0; i < n; ++i)
                 {
@@ -243,6 +271,7 @@ namespace
 
     Assignment PruneClusters(Assignment assignments,
                              const PathLengthMap& pathLengths,
+                             const PositionMap& currentPositions,
                              const size_t clusteringDistance)
     {
         std::vector<size_t> agentIds;
@@ -264,6 +293,14 @@ namespace
 
                 if (dist < clusteringDistance)
                 {
+                    const auto posI = currentPositions.find(agentIds[i]);
+                    const auto posJ = currentPositions.find(agentIds[j]);
+                    if (posI != currentPositions.end()
+                        && posJ != currentPositions.end()
+                        && posI->second == posJ->second)
+                    {
+                        continue;
+                    }
                     adjacency[agentIds[i]].push_back(agentIds[j]);
                     adjacency[agentIds[j]].push_back(agentIds[i]);
                 }
@@ -388,7 +425,7 @@ void Coordinator::AssignTargets()
 
     const Assignment step3 = SelectByMaxArea(step2);
     const Assignment step4 = PruneClusters(
-        step3, pathLengths, static_cast<size_t>(2.0 * GetPerceptionRadius()));
+        step3, pathLengths, positions, static_cast<size_t>(2.0 * GetPerceptionRadius()));
 
     for (const auto& [agentId, target] : step4)
     {

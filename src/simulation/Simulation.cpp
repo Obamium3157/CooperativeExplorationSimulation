@@ -139,10 +139,18 @@ std::vector<std::pair<Point, char>> Simulation::BuildAgentOverlay() const
 
     for (const auto& [position, isCoordinator] : agentInfos)
     {
-        const char symbol = isCoordinator
-            ? DrawableCharacter::Coordinator
-            : DrawableCharacter::Agent;
-        overlay.emplace_back(position, symbol);
+        if (isCoordinator)
+        {
+            overlay.emplace_back(position, DrawableCharacter::Coordinator);
+        }
+    }
+
+    for (const auto& [position, isCoordinator] : agentInfos)
+    {
+        if (!isCoordinator)
+        {
+            overlay.emplace_back(position, DrawableCharacter::Agent);
+        }
     }
 
     return overlay;
