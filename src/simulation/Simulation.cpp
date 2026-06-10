@@ -54,6 +54,8 @@ void Simulation::Run() const
 
         m_context->IterateOverAgents();
     }
+
+    std::cout << "Total time: " << m_context->GetSimulationTime() << "\n";
 }
 
 GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)

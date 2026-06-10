@@ -78,6 +78,11 @@ const Grid& AgentContext::GetMap() const noexcept
     return m_map;
 }
 
+size_t AgentContext::GetSimulationTime() const noexcept
+{
+    return m_simulationTime;
+}
+
 void AgentContext::IterateOverAgents()
 {
     PerceiveAll();
@@ -144,6 +149,7 @@ void AgentContext::MoveAllToTargets()
                 --m_pendingAgentCount;
             }
         }
+        ++m_simulationTime;
     }
 }
 

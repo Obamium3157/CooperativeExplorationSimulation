@@ -26,6 +26,7 @@ public:
     const Agent* TryGetAgent(size_t id) const noexcept;
     const Coordinator* GetCoordinator() const noexcept;
     const Grid& GetMap() const noexcept;
+    size_t GetSimulationTime() const noexcept;
 
     void IterateOverAgents();
 
@@ -51,6 +52,7 @@ private:
     const Grid& m_map;
 
     size_t m_pendingAgentCount = 0;
+    size_t m_simulationTime = 0;
 };
 
 #endif //COOPERATIVEEXPLORATIONSIMULATION_AGENTCONTEXT_H
