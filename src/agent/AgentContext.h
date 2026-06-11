@@ -1,6 +1,7 @@
 #ifndef COOPERATIVEEXPLORATIONSIMULATION_AGENTCONTEXT_H
 #define COOPERATIVEEXPLORATIONSIMULATION_AGENTCONTEXT_H
 
+#include <functional>
 #include <map>
 #include <memory>
 #include <utility>
@@ -21,8 +22,11 @@ public:
      * @throws AgentInitializationException
      * @throws CoordinatorAssignationException
      */
-    explicit AgentContext(const Grid& map, const std::vector<Point>& agentPositions,
-                          size_t coordinatorIndex);
+    explicit AgentContext(const Grid& map,
+                          const std::vector<Point>& agentPositions,
+                          size_t coordinatorIndex,
+                          size_t agentPerceptionRadius,
+                          double delta);
     ~AgentContext() = default;
 
     const Agent* TryGetAgent(size_t id) const noexcept;
@@ -31,7 +35,7 @@ public:
     size_t GetSimulationTime() const noexcept;
     std::vector<std::pair<Point, bool>> GetAgentInfos() const;
 
-    void IterateOverAgents();
+    void IterateOverAgents(const std::function<void()>& onStep = nullptr);
 
 private:
     void PerceiveAll();
@@ -39,15 +43,13 @@ private:
     void AssignTargets();
     void DistributeGlobalBeliefMap();
     void DistributeTargets();
-    void MoveAllToTargets();
+    void MoveAllToTargets(const std::function<void()>& onStep);
     bool AllAgentsArrived() const;
 
     /**
      * @throws std::out_of_range if there is no agent with the given id
      */
     const Agent* GetAgent(size_t id) const;
-
-    static inline size_t s_maxId = 0;
 
     DataBus m_dataBus;
     std::map<size_t, std::unique_ptr<Agent>> m_agentById;

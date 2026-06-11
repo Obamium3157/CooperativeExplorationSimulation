@@ -376,9 +376,10 @@ namespace
 }
 
 Coordinator::Coordinator(const size_t id, const Point& dimensions, const Cell& positionCell,
-                         const double perceptionRadius, AgentContext& context, DataBus& dataBus)
+                         const double perceptionRadius, AgentContext& context, DataBus& dataBus, const double delta)
     : Agent(id, dimensions, positionCell, perceptionRadius, context, dataBus)
     , m_globalBeliefMap(dimensions)
+    , m_delta(delta)
 {
 }
 
@@ -425,7 +426,7 @@ void Coordinator::AssignTargets()
 
     const Assignment step3 = SelectByMaxArea(step2);
     const Assignment step4 = PruneClusters(
-        step3, pathLengths, positions, static_cast<size_t>(2.0 * GetPerceptionRadius()));
+        step3, pathLengths, positions, static_cast<size_t>(m_delta));
 
     for (const auto& [agentId, target] : step4)
     {

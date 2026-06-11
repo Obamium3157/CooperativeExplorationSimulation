@@ -33,29 +33,36 @@ namespace
     }
 }
 
-Simulation::Simulation(const std::filesystem::path& filename, const std::vector<Point>& agentPositions, const DrawableVariant variant)
+Simulation::Simulation(const std::filesystem::path& filename,
+        const std::vector<Point>& agentPositions,
+        const size_t r,
+        const double delta,
+        const DrawableVariant variant)
     : m_map(LoadGridFromFile(filename))
-    , m_context(std::make_unique<AgentContext>(m_map, agentPositions, agentPositions.size() - 1))
+    , m_context(std::make_unique<AgentContext>(m_map, agentPositions, agentPositions.size() - 1, r, delta))
     , m_drawable(MakeDrawable(variant))
 {
 }
 
-void Simulation::Run() const
+size_t Simulation::Run() const
 {
-    m_context->IterateOverAgents();
+    // const auto onStep = [this]()
+    // {
+    //     if (const auto coordinator = m_context->GetCoordinator(); coordinator)
+    //     {
+    //         m_drawable->Draw(coordinator->GetGlobalBeliefMap(), BuildAgentOverlay());
+    //         std::cout << "\n";
+    //     }
+    // };
+    const auto onStep = [] {};
+
+    m_context->IterateOverAgents(onStep);
     while (!m_context->GetCoordinator()->GetFrontiers().empty())
     {
-        if (const auto coordinator = m_context->GetCoordinator(); coordinator)
-        {
-            const auto agentOverlay = BuildAgentOverlay();
-            m_drawable->Draw(coordinator->GetGlobalBeliefMap(), agentOverlay);
-            std::cout << "\n";
-        }
-
-        m_context->IterateOverAgents();
+        m_context->IterateOverAgents(onStep);
     }
 
-    std::cout << "Simulation finished. Total time: " << m_context->GetSimulationTime() << "\n";
+    return m_context->GetSimulationTime();
 }
 
 GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)

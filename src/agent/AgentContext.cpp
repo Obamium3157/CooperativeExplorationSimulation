@@ -6,13 +6,10 @@
 #include "../exceptions/AgentInitializationException.h"
 #include "../exceptions/CoordinatorAssignationException.h"
 
-namespace
-{
-    constexpr double agentPerceptionRadius = 5.0;
-}
-
 AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPositions,
-                           const size_t coordinatorIndex)
+                           const size_t coordinatorIndex,
+                           const size_t agentPerceptionRadius,
+                           const double delta)
     : m_dataBus(agentPositions.size())
     , m_map(map)
 {
@@ -37,13 +34,13 @@ AgentContext::AgentContext(const Grid& map, const std::vector<Point>& agentPosit
                 + ", which is occupied by an obstacle");
         }
 
-        const auto agentId = s_maxId++;
+        const auto agentId = i;
 
         if (i == coordinatorIndex)
         {
             auto coordinator = std::make_unique<Coordinator>(
                 agentId, dimensions, Cell{position, CellState::OccupiedByAgent},
-                agentPerceptionRadius, *this, m_dataBus);
+                agentPerceptionRadius, *this, m_dataBus, delta);
             m_coordinator = coordinator.get();
             m_agentById.emplace(agentId, std::move(coordinator));
         }
@@ -87,7 +84,7 @@ std::vector<std::pair<Point, bool>> AgentContext::GetAgentInfos() const
 {
     std::vector<std::pair<Point, bool>> infos;
     infos.reserve(m_agentById.size());
-    for (const auto& agent : m_agentById | std::views::values)
+    for (const auto& [id, agent] : m_agentById)
     {
         const bool isCoordinator = (agent.get() == m_coordinator);
         infos.emplace_back(agent->GetPosition().position, isCoordinator);
@@ -95,14 +92,14 @@ std::vector<std::pair<Point, bool>> AgentContext::GetAgentInfos() const
     return infos;
 }
 
-void AgentContext::IterateOverAgents()
+void AgentContext::IterateOverAgents(const std::function<void()>& onStep)
 {
     PerceiveAll();
     SynchronizeGlobalBeliefMap();
     AssignTargets();
     DistributeGlobalBeliefMap();
     DistributeTargets();
-    MoveAllToTargets();
+    MoveAllToTargets(onStep);
     m_dataBus.Reset();
 }
 
@@ -145,7 +142,7 @@ void AgentContext::DistributeTargets()
     }
 }
 
-void AgentContext::MoveAllToTargets()
+void AgentContext::MoveAllToTargets(const std::function<void()>& onStep)
 {
     while (m_pendingAgentCount > 0)
     {
@@ -162,6 +159,10 @@ void AgentContext::MoveAllToTargets()
             }
         }
         ++m_simulationTime;
+        if (onStep)
+        {
+            onStep();
+        }
     }
 }
 

@@ -21,9 +21,11 @@ public:
     explicit Simulation(
         const std::filesystem::path& filename,
         const std::vector<Point>& agentPositions,
+        size_t r,
+        double delta,
         DrawableVariant variant);
 
-    void Run() const;
+    size_t Run() const;
 private:
     /**
      * @throws std::runtime_error if file does not exist

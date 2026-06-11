@@ -10,7 +10,8 @@ class Coordinator : public Agent
 {
 public:
     explicit Coordinator(size_t id, const Point& dimensions, const Cell& positionCell,
-                         double perceptionRadius, AgentContext& context, DataBus& dataBus);
+                         double perceptionRadius, AgentContext& context, DataBus& dataBus,
+                         double delta);
 
     void SynchronizeGlobalMap();
     void AssignTargets();
@@ -21,6 +22,7 @@ public:
 private:
     Grid m_globalBeliefMap;
     std::vector<Point> m_frontiers;
+    double m_delta;
 };
 
 
