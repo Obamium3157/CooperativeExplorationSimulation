@@ -275,8 +275,6 @@ namespace
                              const PositionMap& currentPositions,
                              const size_t clusteringDistance)
     {
-        std::cout << "Step 4\n";
-        std::cout << "\tAssignments amount: " << assignments.size() << '\n';
         std::vector<size_t> agentIds;
         agentIds.reserve(assignments.size());
         for (const auto& id : assignments | std::views::keys)
