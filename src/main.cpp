@@ -32,7 +32,7 @@ int main()
         //         {
         //             std::cout << "Radius: " << radius
         //                 << "\tAmount: " << i
-        //                 << "\tResult: " << RunSimulation("tube.txt", Point{0, 0}, i, radius, 3.0 * radius) << "\n";
+        //                 << "\tResult: " << RunSimulation("brush.txt", Point{0, 0}, i, radius, 3.0 * radius) << "\n";
         //         }
         //         std::cout << "\n";
         //     }

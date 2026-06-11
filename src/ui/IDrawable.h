@@ -8,13 +8,20 @@
 
 class Grid;
 
+struct AgentOverlayEntry
+{
+    Point position;
+    char type;
+    std::optional<Point> target;
+};
+
 class IDrawable
 {
 public:
     virtual ~IDrawable() = default;
 
     virtual void Draw(const Grid& grid,
-                      const std::vector<std::pair<Point, char>>& agentOverlay) = 0;
+                      const std::vector<AgentOverlayEntry>& agentOverlay) = 0;
 
     virtual void OnSimulationFinished() {}
 };

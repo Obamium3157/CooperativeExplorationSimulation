@@ -16,7 +16,7 @@ class ConsoleDrawer : public IDrawable
 public:
     explicit ConsoleDrawer(std::ostream& out, unsigned int sleepTime);
     void Draw(const Grid& grid,
-              const std::vector<std::pair<Point, char>>& agentOverlay) override;
+              const std::vector<AgentOverlayEntry>& agentOverlay) override;
 
 private:
     void DrawHorizontalBorder(unsigned int width) const;

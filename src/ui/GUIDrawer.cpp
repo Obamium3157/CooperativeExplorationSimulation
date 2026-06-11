@@ -29,7 +29,7 @@ GUIDrawer::GUIDrawer(const unsigned int sleepTime)
 }
 
 void GUIDrawer::Draw(const Grid& grid,
-                     const std::vector<std::pair<Point, char>>& agentOverlay)
+                     const std::vector<AgentOverlayEntry>& agentOverlay)
 {
     const auto [width, height] = grid.GetDimensions();
 
@@ -48,6 +48,7 @@ void GUIDrawer::Draw(const Grid& grid,
 
     m_window->clear(sf::Color::Black);
     DrawCells(grid);
+    DrawAgentTargets(agentOverlay);
     DrawAgents(agentOverlay);
     m_window->display();
     std::this_thread::sleep_for(std::chrono::milliseconds(m_sleepTime));
@@ -132,15 +133,27 @@ void GUIDrawer::DrawCells(const Grid& grid) const
     }
 }
 
-void GUIDrawer::DrawAgents(const std::vector<std::pair<Point, char>>& agentOverlay) const
+void GUIDrawer::DrawAgentTarget(const sf::Vector2f cellTopLeft, const sf::Color agentColor) const
+{
+    constexpr float markerSize = static_cast<float>(cellSize) / 2.0f;
+    constexpr float markerOffset = (static_cast<float>(cellSize) - markerSize) / 2.0f;
+
+    sf::RectangleShape marker({markerSize, markerSize});
+    marker.setFillColor(agentColor);
+    marker.setOutlineColor(sf::Color::Blue);
+    marker.setOutlineThickness(2.0f);
+    marker.setPosition({cellTopLeft.x + markerOffset, cellTopLeft.y + markerOffset});
+    m_window->draw(marker);
+}
+
+void GUIDrawer::DrawAgents(const std::vector<AgentOverlayEntry>& agentOverlay) const
 {
     constexpr float circleRadius = static_cast<float>(cellSize) / 2.0f - 3.0f;
     constexpr float circleOffset = static_cast<float>(cellSize) / 2.0f - circleRadius;
 
     for (size_t i = 0; i < agentOverlay.size(); ++i)
     {
-        const auto& [point, ch] = agentOverlay[i];
-        const sf::Vector2f topLeft = CellTopLeft(point);
+        const sf::Vector2f topLeft = CellTopLeft(agentOverlay[i].position);
 
         sf::CircleShape circle(circleRadius);
         circle.setFillColor(m_agentColors[i]);
@@ -149,10 +162,22 @@ void GUIDrawer::DrawAgents(const std::vector<std::pair<Point, char>>& agentOverl
         circle.setPosition({topLeft.x + circleOffset, topLeft.y + circleOffset});
         m_window->draw(circle);
 
-        if (ch == DrawableCharacter::Coordinator)
+        if (agentOverlay[i].type == DrawableCharacter::Coordinator)
         {
             DrawCoordinatorMarker(topLeft);
         }
+    }
+}
+
+void GUIDrawer::DrawAgentTargets(const std::vector<AgentOverlayEntry>& agentOverlay) const
+{
+    for (size_t i = 0; i < agentOverlay.size(); ++i)
+    {
+        if (!agentOverlay[i].target.has_value())
+        {
+            continue;
+        }
+        DrawAgentTarget(CellTopLeft(*agentOverlay[i].target), m_agentColors[i]);
     }
 }
 

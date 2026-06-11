@@ -54,7 +54,6 @@ size_t Simulation::Run() const
             m_drawable->Draw(coordinator->GetGlobalBeliefMap(), BuildAgentOverlay());
         }
     };
-    // const auto onStep = [] {};
 
     m_context->IterateOverAgents(onStep);
     while (!m_context->GetCoordinator()->GetFrontiers().empty())
@@ -140,26 +139,22 @@ std::unique_ptr<IDrawable> Simulation::MakeDrawable(const DrawableVariant varian
     }
 }
 
-std::vector<std::pair<Point, char>> Simulation::BuildAgentOverlay() const
+std::vector<AgentOverlayEntry> Simulation::BuildAgentOverlay() const
 {
     const auto agentInfos = m_context->GetAgentInfos();
 
-    std::vector<std::pair<Point, char>> overlay;
+    std::vector<AgentOverlayEntry> overlay;
     overlay.reserve(agentInfos.size());
 
-    for (const auto& [position, isCoordinator] : agentInfos)
+    for (const auto& [position, isCoordinator, target] : agentInfos)
     {
         if (isCoordinator)
         {
-            overlay.emplace_back(position, DrawableCharacter::Coordinator);
+            overlay.emplace_back(position, DrawableCharacter::Coordinator, target);
         }
-    }
-
-    for (const auto& [position, isCoordinator] : agentInfos)
-    {
-        if (!isCoordinator)
+        else
         {
-            overlay.emplace_back(position, DrawableCharacter::Agent);
+            overlay.emplace_back(position, DrawableCharacter::Agent, target);
         }
     }
 

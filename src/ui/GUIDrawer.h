@@ -15,7 +15,7 @@ public:
     explicit GUIDrawer(unsigned int sleepTime);
 
     void Draw(const Grid& grid,
-              const std::vector<std::pair<Point, char>>& agentOverlay) override;
+              const std::vector<AgentOverlayEntry>& agentOverlay) override;
 
     void OnSimulationFinished() override;
 
@@ -23,7 +23,9 @@ private:
     void InitializeWindow(unsigned int gridWidth, unsigned int gridHeight);
     void HandleEvents() const;
     void DrawCells(const Grid& grid) const;
-    void DrawAgents(const std::vector<std::pair<Point, char>>& agentOverlay) const;
+    void DrawAgentTarget(sf::Vector2f cellTopLeft, sf::Color agentColor) const;
+    void DrawAgentTargets(const std::vector<AgentOverlayEntry>& agentOverlay) const;
+    void DrawAgents(const std::vector<AgentOverlayEntry>& agentOverlay) const;
     void DrawCoordinatorMarker(sf::Vector2f cellTopLeft) const;
     void EnsureAgentColors(size_t requiredCount);
     sf::Color GenerateRandomColor();

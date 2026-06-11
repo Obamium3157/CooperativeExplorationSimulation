@@ -80,14 +80,14 @@ size_t AgentContext::GetSimulationTime() const noexcept
     return m_simulationTime;
 }
 
-std::vector<std::pair<Point, bool>> AgentContext::GetAgentInfos() const
+std::vector<AgentInfo> AgentContext::GetAgentInfos() const
 {
-    std::vector<std::pair<Point, bool>> infos;
+    std::vector<AgentInfo> infos;
     infos.reserve(m_agentById.size());
     for (const auto& [id, agent] : m_agentById)
     {
         const bool isCoordinator = (agent.get() == m_coordinator);
-        infos.emplace_back(agent->GetPosition().position, isCoordinator);
+        infos.emplace_back(agent->GetPosition().position, isCoordinator, agent->GetTarget());
     }
     return infos;
 }

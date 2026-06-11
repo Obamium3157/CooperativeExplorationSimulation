@@ -21,7 +21,7 @@ ConsoleDrawer::ConsoleDrawer(std::ostream& out, const unsigned int sleepTime)
 }
 
 void ConsoleDrawer::Draw(const Grid& grid,
-                         const std::vector<std::pair<Point, char>>& agentOverlay)
+                         const std::vector<AgentOverlayEntry>& agentOverlay)
 {
     ClearConsole(m_out);
 
@@ -37,11 +37,11 @@ void ConsoleDrawer::Draw(const Grid& grid,
             const Point currentPoint{x, y};
             const auto agentIt = std::find_if(
                 agentOverlay.begin(), agentOverlay.end(),
-                [&currentPoint](const auto& entry) { return entry.first == currentPoint; });
+                [&currentPoint](const AgentOverlayEntry& entry) { return entry.position == currentPoint; });
 
             if (agentIt != agentOverlay.end())
             {
-                m_out << agentIt->second;
+                m_out << agentIt->type;
             }
             else
             {

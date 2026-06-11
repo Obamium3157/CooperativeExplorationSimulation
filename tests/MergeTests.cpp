@@ -7,7 +7,7 @@
 namespace
 {
 
-Grid makeUniformGrid(const size_t width, const size_t height, const CellState state)
+Grid MakeUniformGrid(const size_t width, const size_t height, const CellState state)
 {
     GridMatrix matrix;
     for (size_t y = 0; y < height; ++y)
@@ -22,17 +22,17 @@ Grid makeUniformGrid(const size_t width, const size_t height, const CellState st
     return Grid(std::move(matrix));
 }
 
-Grid makeFreeGrid(const size_t width, const size_t height)
+Grid MakeFreeGrid(const size_t width, const size_t height)
 {
-    return makeUniformGrid(width, height, CellState::Free);
+    return MakeUniformGrid(width, height, CellState::Free);
 }
 
-Grid makeUnknownGrid(const size_t width, const size_t height)
+Grid MakeUnknownGrid(const size_t width, const size_t height)
 {
-    return makeUniformGrid(width, height, CellState::Unknown);
+    return MakeUniformGrid(width, height, CellState::Unknown);
 }
 
-CellState stateAt(const Grid& grid, const size_t x, const size_t y)
+CellState StateAt(const Grid& grid, const size_t x, const size_t y)
 {
     return grid.GetCell(Point{x, y}).state;
 }
@@ -42,7 +42,7 @@ CellState stateAt(const Grid& grid, const size_t x, const size_t y)
 TEST_CASE("Readiness = false until all LBMs are submitted.", "[DataBus]")
 {
     DataBus bus{2};
-    const Grid lbm = makeFreeGrid(5, 5);
+    const Grid lbm = MakeFreeGrid(5, 5);
 
     CHECK_FALSE(bus.AreAllLbmsReady());
 
@@ -56,7 +56,7 @@ TEST_CASE("Readiness = false until all LBMs are submitted.", "[DataBus]")
 TEST_CASE("Re-submitting LBM to the same agent does not increase the counter", "[DataBus]")
 {
     DataBus bus{2};
-    const Grid lbm = makeFreeGrid(5, 5);
+    const Grid lbm = MakeFreeGrid(5, 5);
 
     bus.SubmitLbm(0, lbm);
     bus.SubmitLbm(0, lbm);
@@ -67,20 +67,20 @@ TEST_CASE("Re-submitting LBM to the same agent does not increase the counter", "
 TEST_CASE("After BroadcastGbm, the GetGbm method returns the transmitted map", "[DataBus]")
 {
     DataBus bus{1};
-    Grid gbm = makeFreeGrid(5, 5);
+    Grid gbm = MakeFreeGrid(5, 5);
     gbm.SetCell(Point{2, 2}, Cell{Point{2, 2}, CellState::Obstacle});
 
     bus.BroadcastGbm(gbm);
 
     REQUIRE(bus.GetGbm().has_value());
-    CHECK(stateAt(*bus.GetGbm(), 2, 2) == CellState::Obstacle);
-    CHECK(stateAt(*bus.GetGbm(), 0, 0) == CellState::Free);
+    CHECK(StateAt(*bus.GetGbm(), 2, 2) == CellState::Obstacle);
+    CHECK(StateAt(*bus.GetGbm(), 0, 0) == CellState::Free);
 }
 
 TEST_CASE("Reset resets LBM and GBM", "[DataBus]")
 {
     DataBus bus{1};
-    const Grid lbm = makeFreeGrid(5, 5);
+    const Grid lbm = MakeFreeGrid(5, 5);
 
     bus.SubmitLbm(0, lbm);
     bus.BroadcastGbm(lbm);
@@ -93,135 +93,135 @@ TEST_CASE("Reset resets LBM and GBM", "[DataBus]")
 
 TEST_CASE("Unknown source does not change target", "[MergeFrom]")
 {
-    const Grid source = makeUnknownGrid(3, 3);
+    const Grid source = MakeUnknownGrid(3, 3);
 
     SECTION("The target is Unknown => remains Unknown")
     {
-        Grid target = makeUnknownGrid(3, 3);
+        Grid target = MakeUnknownGrid(3, 3);
         target.MergeFrom(source);
-        CHECK(stateAt(target, 1, 1) == CellState::Unknown);
+        CHECK(StateAt(target, 1, 1) == CellState::Unknown);
     }
     SECTION("The target is Free => remains Free")
     {
-        Grid target = makeFreeGrid(3, 3);
+        Grid target = MakeFreeGrid(3, 3);
         target.MergeFrom(source);
-        CHECK(stateAt(target, 1, 1) == CellState::Free);
+        CHECK(StateAt(target, 1, 1) == CellState::Free);
     }
     SECTION("The target is Obstacle => remains Obstacle")
     {
-        Grid target = makeUniformGrid(3, 3, CellState::Obstacle);
+        Grid target = MakeUniformGrid(3, 3, CellState::Obstacle);
         target.MergeFrom(source);
-        CHECK(stateAt(target, 1, 1) == CellState::Obstacle);
+        CHECK(StateAt(target, 1, 1) == CellState::Obstacle);
     }
 }
 
 TEST_CASE("Free source is written to target", "[MergeFrom]")
 {
-    const Grid source = makeFreeGrid(3, 3);
+    const Grid source = MakeFreeGrid(3, 3);
 
     SECTION("Unknown => Free")
     {
-        Grid target = makeUnknownGrid(3, 3);
+        Grid target = MakeUnknownGrid(3, 3);
         target.MergeFrom(source);
-        CHECK(stateAt(target, 1, 1) == CellState::Free);
+        CHECK(StateAt(target, 1, 1) == CellState::Free);
     }
     SECTION("Free => Free")
     {
-        Grid target = makeFreeGrid(3, 3);
+        Grid target = MakeFreeGrid(3, 3);
         target.MergeFrom(source);
-        CHECK(stateAt(target, 1, 1) == CellState::Free);
+        CHECK(StateAt(target, 1, 1) == CellState::Free);
     }
 }
 
 TEST_CASE("Obstacle source is written to target", "[MergeFrom]")
 {
-    const Grid source = makeUniformGrid(3, 3, CellState::Obstacle);
+    const Grid source = MakeUniformGrid(3, 3, CellState::Obstacle);
 
     SECTION("Unknown => Obstacle")
     {
-        Grid target = makeUnknownGrid(3, 3);
+        Grid target = MakeUnknownGrid(3, 3);
         target.MergeFrom(source);
-        CHECK(stateAt(target, 1, 1) == CellState::Obstacle);
+        CHECK(StateAt(target, 1, 1) == CellState::Obstacle);
     }
     SECTION("Obstacle => Obstacle")
     {
-        Grid target = makeUniformGrid(3, 3, CellState::Obstacle);
+        Grid target = MakeUniformGrid(3, 3, CellState::Obstacle);
         target.MergeFrom(source);
-        CHECK(stateAt(target, 1, 1) == CellState::Obstacle);
+        CHECK(StateAt(target, 1, 1) == CellState::Obstacle);
     }
 }
 
 TEST_CASE("Only cells with a known state in the source are changed", "[MergeFrom]")
 {
-    Grid target = makeUnknownGrid(3, 3);
-    Grid source = makeUnknownGrid(3, 3);
+    Grid target = MakeUnknownGrid(3, 3);
+    Grid source = MakeUnknownGrid(3, 3);
     source.SetCell(Point{1, 1}, Cell{Point{1, 1}, CellState::Free});
 
     target.MergeFrom(source);
 
-    CHECK(stateAt(target, 1, 1) == CellState::Free);
-    CHECK(stateAt(target, 0, 0) == CellState::Unknown);
-    CHECK(stateAt(target, 2, 2) == CellState::Unknown);
+    CHECK(StateAt(target, 1, 1) == CellState::Free);
+    CHECK(StateAt(target, 0, 0) == CellState::Unknown);
+    CHECK(StateAt(target, 2, 2) == CellState::Unknown);
 }
 
 TEST_CASE("Merging with itself is idempotent", "[MergeFrom]")
 {
-    Grid grid = makeFreeGrid(3, 3);
+    Grid grid = MakeFreeGrid(3, 3);
     grid.SetCell(Point{1, 1}, Cell{Point{1, 1}, CellState::Obstacle});
 
     grid.MergeFrom(grid);
 
-    CHECK(stateAt(grid, 1, 1) == CellState::Obstacle);
-    CHECK(stateAt(grid, 0, 0) == CellState::Free);
+    CHECK(StateAt(grid, 1, 1) == CellState::Obstacle);
+    CHECK(StateAt(grid, 0, 0) == CellState::Free);
 }
 
 TEST_CASE("Completely Unknown source does not change any target cell", "[MergeFrom:]")
 {
-    Grid target = makeFreeGrid(5, 5);
+    Grid target = MakeFreeGrid(5, 5);
     target.SetCell(Point{2, 2}, Cell{Point{2, 2}, CellState::Obstacle});
 
-    const Grid source = makeUnknownGrid(5, 5);
+    const Grid source = MakeUnknownGrid(5, 5);
     target.MergeFrom(source);
 
-    CHECK(stateAt(target, 0, 0) == CellState::Free);
-    CHECK(stateAt(target, 2, 2) == CellState::Obstacle);
+    CHECK(StateAt(target, 0, 0) == CellState::Free);
+    CHECK(StateAt(target, 2, 2) == CellState::Obstacle);
 }
 
 TEST_CASE("GBM contains cells from the perceptual field of all agents", "[SynchronizeGlobalMap]")
 {
-    const Grid realMap = makeFreeGrid(25, 25);
+    const Grid realMap = MakeFreeGrid(25, 25);
     AgentContext context{realMap, {{2, 2}, {22, 22}}, 1};
 
     context.IterateOverAgents();
 
     const Grid& gbm = context.GetCoordinator()->GetGlobalBeliefMap();
 
-    CHECK(stateAt(gbm, 2, 2) == CellState::Free);
-    CHECK(stateAt(gbm, 6, 2) == CellState::Free);
+    CHECK(StateAt(gbm, 2, 2) == CellState::Free);
+    CHECK(StateAt(gbm, 6, 2) == CellState::Free);
 
-    CHECK(stateAt(gbm, 22, 22) == CellState::Free);
-    CHECK(stateAt(gbm, 18, 22) == CellState::Free);
+    CHECK(StateAt(gbm, 22, 22) == CellState::Free);
+    CHECK(StateAt(gbm, 18, 22) == CellState::Free);
 
-    CHECK(stateAt(gbm, 12, 12) == CellState::Unknown);
+    CHECK(StateAt(gbm, 12, 12) == CellState::Unknown);
 }
 
 TEST_CASE("Agent sees only his own => the other does not see the same", "[SynchronizeGlobalMap]")
 {
-    const Grid realMap = makeFreeGrid(25, 25);
+    const Grid realMap = MakeFreeGrid(25, 25);
     AgentContext context{realMap, {{1, 1}, {23, 23}}, 1};
 
     context.IterateOverAgents();
 
     const Grid& gbm = context.GetCoordinator()->GetGlobalBeliefMap();
 
-    CHECK(stateAt(gbm, 1, 1) == CellState::Free);
+    CHECK(StateAt(gbm, 1, 1) == CellState::Free);
 
-    CHECK(stateAt(gbm, 23, 23) == CellState::Free);
+    CHECK(StateAt(gbm, 23, 23) == CellState::Free);
 }
 
 TEST_CASE("GBM accumulates knowledge between rounds", "[SynchronizeGlobalMap]")
 {
-    const Grid realMap = makeFreeGrid(25, 25);
+    const Grid realMap = MakeFreeGrid(25, 25);
     AgentContext context{realMap, {{2, 2}, {22, 22}}, 1};
 
     context.IterateOverAgents();
@@ -229,24 +229,24 @@ TEST_CASE("GBM accumulates knowledge between rounds", "[SynchronizeGlobalMap]")
 
     const Grid& gbm = context.GetCoordinator()->GetGlobalBeliefMap();
 
-    CHECK(stateAt(gbm, 2, 2)  == CellState::Free);
-    CHECK(stateAt(gbm, 22, 22) == CellState::Free);
-    CHECK(stateAt(gbm, 12, 12) == CellState::Unknown);
+    CHECK(StateAt(gbm, 2, 2)  == CellState::Free);
+    CHECK(StateAt(gbm, 22, 22) == CellState::Free);
+    CHECK(StateAt(gbm, 12, 12) == CellState::Unknown);
 }
 
 TEST_CASE("The agent drains GBM from the bus into the local map", "[ApplyGbm]")
 {
     DataBus bus{0};
 
-    Grid gbm = makeUnknownGrid(5, 5);
+    Grid gbm = MakeUnknownGrid(5, 5);
     gbm.SetCell(Point{4, 4}, Cell{Point{4, 4}, CellState::Free});
     gbm.SetCell(Point{0, 0}, Cell{Point{0, 0}, CellState::Obstacle});
     bus.BroadcastGbm(gbm);
 
-    Grid localMap = makeUnknownGrid(5, 5);
+    Grid localMap = MakeUnknownGrid(5, 5);
     localMap.MergeFrom(*bus.GetGbm());
 
-    CHECK(stateAt(localMap, 4, 4) == CellState::Free);
-    CHECK(stateAt(localMap, 0, 0) == CellState::Obstacle);
-    CHECK(stateAt(localMap, 2, 2) == CellState::Unknown);
+    CHECK(StateAt(localMap, 4, 4) == CellState::Free);
+    CHECK(StateAt(localMap, 0, 0) == CellState::Obstacle);
+    CHECK(StateAt(localMap, 2, 2) == CellState::Unknown);
 }

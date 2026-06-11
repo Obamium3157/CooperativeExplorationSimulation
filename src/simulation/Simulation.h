@@ -34,7 +34,7 @@ private:
      */
     static GridMatrix LoadGridFromFile(const std::filesystem::path& filename);
     static std::unique_ptr<IDrawable> MakeDrawable(DrawableVariant variant, unsigned int sleepTime);
-    std::vector<std::pair<Point, char>> BuildAgentOverlay() const;
+    std::vector<AgentOverlayEntry> BuildAgentOverlay() const;
 
     Grid m_map;
     std::unique_ptr<AgentContext> m_context;

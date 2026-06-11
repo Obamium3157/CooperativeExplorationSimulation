@@ -36,6 +36,15 @@ bool Agent::HasArrived() const noexcept
     return m_hasArrived;
 }
 
+std::optional<Point> Agent::GetTarget() const noexcept
+{
+    if (m_hasArrived || m_currentPath.empty())
+    {
+        return std::nullopt;
+    }
+    return m_currentPath.front();
+}
+
 void Agent::Act()
 {
     Perceive();

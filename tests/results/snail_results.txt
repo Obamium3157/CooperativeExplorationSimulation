@@ -1,0 +1,299 @@
+delta = 0
+Radius: 1       Amount: 1       Result: 419
+Radius: 1       Amount: 2       Result: 419
+Radius: 1       Amount: 3       Result: 419
+Radius: 1       Amount: 4       Result: 419
+Radius: 1       Amount: 5       Result: 419
+Radius: 1       Amount: 6       Result: 419
+Radius: 1       Amount: 7       Result: 419
+Radius: 1       Amount: 8       Result: 419
+Radius: 1       Amount: 9       Result: 419
+Radius: 1       Amount: 10      Result: 419
+
+delta = 1
+Radius: 1       Amount: 1       Result: 419
+Radius: 1       Amount: 2       Result: 419
+Radius: 1       Amount: 3       Result: 419
+Radius: 1       Amount: 4       Result: 419
+Radius: 1       Amount: 5       Result: 419
+Radius: 1       Amount: 6       Result: 419
+Radius: 1       Amount: 7       Result: 419
+Radius: 1       Amount: 8       Result: 419
+Radius: 1       Amount: 9       Result: 419
+Radius: 1       Amount: 10      Result: 419
+
+delta = radius
+Radius: 1       Amount: 1       Result: 419
+Radius: 1       Amount: 2       Result: 419
+Radius: 1       Amount: 3       Result: 419
+Radius: 1       Amount: 4       Result: 419
+Radius: 1       Amount: 5       Result: 419
+Radius: 1       Amount: 6       Result: 419
+Radius: 1       Amount: 7       Result: 419
+Radius: 1       Amount: 8       Result: 419
+Radius: 1       Amount: 9       Result: 419
+Radius: 1       Amount: 10      Result: 419
+
+delta = 2 * radius
+Radius: 1       Amount: 1       Result: 419
+Radius: 1       Amount: 2       Result: 419
+Radius: 1       Amount: 3       Result: 419
+Radius: 1       Amount: 4       Result: 419
+Radius: 1       Amount: 5       Result: 419
+Radius: 1       Amount: 6       Result: 419
+Radius: 1       Amount: 7       Result: 419
+Radius: 1       Amount: 8       Result: 419
+Radius: 1       Amount: 9       Result: 419
+Radius: 1       Amount: 10      Result: 419
+
+delta = 3 * radius
+Radius: 1       Amount: 1       Result: 419
+Radius: 1       Amount: 2       Result: 419
+Radius: 1       Amount: 3       Result: 419
+Radius: 1       Amount: 4       Result: 419
+Radius: 1       Amount: 5       Result: 419
+Radius: 1       Amount: 6       Result: 419
+Radius: 1       Amount: 7       Result: 419
+Radius: 1       Amount: 8       Result: 419
+Radius: 1       Amount: 9       Result: 419
+Radius: 1       Amount: 10      Result: 419
+
+delta = 0
+Radius: 2       Amount: 1       Result: 410
+Radius: 2       Amount: 2       Result: 410
+Radius: 2       Amount: 3       Result: 410
+Radius: 2       Amount: 4       Result: 410
+Radius: 2       Amount: 5       Result: 410
+Radius: 2       Amount: 6       Result: 410
+Radius: 2       Amount: 7       Result: 410
+Radius: 2       Amount: 8       Result: 410
+Radius: 2       Amount: 9       Result: 410
+Radius: 2       Amount: 10      Result: 410
+
+delta = 1
+Radius: 2       Amount: 1       Result: 410
+Radius: 2       Amount: 2       Result: 410
+Radius: 2       Amount: 3       Result: 410
+Radius: 2       Amount: 4       Result: 410
+Radius: 2       Amount: 5       Result: 410
+Radius: 2       Amount: 6       Result: 410
+Radius: 2       Amount: 7       Result: 410
+Radius: 2       Amount: 8       Result: 410
+Radius: 2       Amount: 9       Result: 410
+Radius: 2       Amount: 10      Result: 410
+
+delta = radius
+Radius: 2       Amount: 1       Result: 410
+Radius: 2       Amount: 2       Result: 410
+Radius: 2       Amount: 3       Result: 410
+Radius: 2       Amount: 4       Result: 410
+Radius: 2       Amount: 5       Result: 410
+Radius: 2       Amount: 6       Result: 410
+Radius: 2       Amount: 7       Result: 410
+Radius: 2       Amount: 8       Result: 410
+Radius: 2       Amount: 9       Result: 410
+Radius: 2       Amount: 10      Result: 410
+
+delta = 2 * radius
+Radius: 2       Amount: 1       Result: 410
+Radius: 2       Amount: 2       Result: 410
+Radius: 2       Amount: 3       Result: 410
+Radius: 2       Amount: 4       Result: 410
+Radius: 2       Amount: 5       Result: 410
+Radius: 2       Amount: 6       Result: 410
+Radius: 2       Amount: 7       Result: 410
+Radius: 2       Amount: 8       Result: 410
+Radius: 2       Amount: 9       Result: 410
+Radius: 2       Amount: 10      Result: 410
+
+delta = 3 * radius
+Radius: 2       Amount: 1       Result: 410
+Radius: 2       Amount: 2       Result: 410
+Radius: 2       Amount: 3       Result: 410
+Radius: 2       Amount: 4       Result: 410
+Radius: 2       Amount: 5       Result: 410
+Radius: 2       Amount: 6       Result: 410
+Radius: 2       Amount: 7       Result: 410
+Radius: 2       Amount: 8       Result: 410
+Radius: 2       Amount: 9       Result: 410
+Radius: 2       Amount: 10      Result: 410
+
+delta = 0
+Radius: 5       Amount: 1       Result: 404
+Radius: 5       Amount: 2       Result: 404
+Radius: 5       Amount: 3       Result: 404
+Radius: 5       Amount: 4       Result: 404
+Radius: 5       Amount: 5       Result: 404
+Radius: 5       Amount: 6       Result: 404
+Radius: 5       Amount: 7       Result: 404
+Radius: 5       Amount: 8       Result: 404
+Radius: 5       Amount: 9       Result: 404
+Radius: 5       Amount: 10      Result: 404
+
+delta = 1
+Radius: 5       Amount: 1       Result: 404
+Radius: 5       Amount: 2       Result: 404
+Radius: 5       Amount: 3       Result: 404
+Radius: 5       Amount: 4       Result: 404
+Radius: 5       Amount: 5       Result: 404
+Radius: 5       Amount: 6       Result: 404
+Radius: 5       Amount: 7       Result: 404
+Radius: 5       Amount: 8       Result: 404
+Radius: 5       Amount: 9       Result: 404
+Radius: 5       Amount: 10      Result: 404
+
+delta = radius
+Radius: 5       Amount: 1       Result: 404
+Radius: 5       Amount: 2       Result: 404
+Radius: 5       Amount: 3       Result: 404
+Radius: 5       Amount: 4       Result: 404
+Radius: 5       Amount: 5       Result: 404
+Radius: 5       Amount: 6       Result: 404
+Radius: 5       Amount: 7       Result: 404
+Radius: 5       Amount: 8       Result: 404
+Radius: 5       Amount: 9       Result: 404
+Radius: 5       Amount: 10      Result: 404
+
+delta = 2 * radius
+Radius: 5       Amount: 1       Result: 404
+Radius: 5       Amount: 2       Result: 404
+Radius: 5       Amount: 3       Result: 404
+Radius: 5       Amount: 4       Result: 404
+Radius: 5       Amount: 5       Result: 404
+Radius: 5       Amount: 6       Result: 404
+Radius: 5       Amount: 7       Result: 404
+Radius: 5       Amount: 8       Result: 404
+Radius: 5       Amount: 9       Result: 404
+Radius: 5       Amount: 10      Result: 404
+
+delta = 3 * radius
+Radius: 5       Amount: 1       Result: 404
+Radius: 5       Amount: 2       Result: 404
+Radius: 5       Amount: 3       Result: 404
+Radius: 5       Amount: 4       Result: 404
+Radius: 5       Amount: 5       Result: 404
+Radius: 5       Amount: 6       Result: 404
+Radius: 5       Amount: 7       Result: 404
+Radius: 5       Amount: 8       Result: 404
+Radius: 5       Amount: 9       Result: 404
+Radius: 5       Amount: 10      Result: 404
+
+delta = 0
+Radius: 8       Amount: 1       Result: 403
+Radius: 8       Amount: 2       Result: 403
+Radius: 8       Amount: 3       Result: 403
+Radius: 8       Amount: 4       Result: 403
+Radius: 8       Amount: 5       Result: 403
+Radius: 8       Amount: 6       Result: 403
+Radius: 8       Amount: 7       Result: 403
+Radius: 8       Amount: 8       Result: 403
+Radius: 8       Amount: 9       Result: 403
+Radius: 8       Amount: 10      Result: 403
+
+delta = 1
+Radius: 8       Amount: 1       Result: 403
+Radius: 8       Amount: 2       Result: 403
+Radius: 8       Amount: 3       Result: 403
+Radius: 8       Amount: 4       Result: 403
+Radius: 8       Amount: 5       Result: 403
+Radius: 8       Amount: 6       Result: 403
+Radius: 8       Amount: 7       Result: 403
+Radius: 8       Amount: 8       Result: 403
+Radius: 8       Amount: 9       Result: 403
+Radius: 8       Amount: 10      Result: 403
+
+delta = radius
+Radius: 8       Amount: 1       Result: 403
+Radius: 8       Amount: 2       Result: 403
+Radius: 8       Amount: 3       Result: 403
+Radius: 8       Amount: 4       Result: 403
+Radius: 8       Amount: 5       Result: 403
+Radius: 8       Amount: 6       Result: 403
+Radius: 8       Amount: 7       Result: 403
+Radius: 8       Amount: 8       Result: 403
+Radius: 8       Amount: 9       Result: 403
+Radius: 8       Amount: 10      Result: 403
+
+delta = 2 * radius
+Radius: 8       Amount: 1       Result: 403
+Radius: 8       Amount: 2       Result: 403
+Radius: 8       Amount: 3       Result: 403
+Radius: 8       Amount: 4       Result: 403
+Radius: 8       Amount: 5       Result: 403
+Radius: 8       Amount: 6       Result: 403
+Radius: 8       Amount: 7       Result: 403
+Radius: 8       Amount: 8       Result: 403
+Radius: 8       Amount: 9       Result: 403
+Radius: 8       Amount: 10      Result: 403
+
+delta = 3 * radius
+Radius: 8       Amount: 1       Result: 403
+Radius: 8       Amount: 2       Result: 403
+Radius: 8       Amount: 3       Result: 403
+Radius: 8       Amount: 4       Result: 403
+Radius: 8       Amount: 5       Result: 403
+Radius: 8       Amount: 6       Result: 403
+Radius: 8       Amount: 7       Result: 403
+Radius: 8       Amount: 8       Result: 403
+Radius: 8       Amount: 9       Result: 403
+Radius: 8       Amount: 10      Result: 403
+
+delta = 0
+Radius: 10      Amount: 1       Result: 399
+Radius: 10      Amount: 2       Result: 399
+Radius: 10      Amount: 3       Result: 399
+Radius: 10      Amount: 4       Result: 399
+Radius: 10      Amount: 5       Result: 399
+Radius: 10      Amount: 6       Result: 399
+Radius: 10      Amount: 7       Result: 399
+Radius: 10      Amount: 8       Result: 399
+Radius: 10      Amount: 9       Result: 399
+Radius: 10      Amount: 10      Result: 399
+
+delta = 1
+Radius: 10      Amount: 1       Result: 399
+Radius: 10      Amount: 2       Result: 399
+Radius: 10      Amount: 3       Result: 399
+Radius: 10      Amount: 4       Result: 399
+Radius: 10      Amount: 5       Result: 399
+Radius: 10      Amount: 6       Result: 399
+Radius: 10      Amount: 7       Result: 399
+Radius: 10      Amount: 8       Result: 399
+Radius: 10      Amount: 9       Result: 399
+Radius: 10      Amount: 10      Result: 399
+
+delta = radius
+Radius: 10      Amount: 1       Result: 399
+Radius: 10      Amount: 2       Result: 399
+Radius: 10      Amount: 3       Result: 399
+Radius: 10      Amount: 4       Result: 399
+Radius: 10      Amount: 5       Result: 399
+Radius: 10      Amount: 6       Result: 399
+Radius: 10      Amount: 7       Result: 399
+Radius: 10      Amount: 8       Result: 399
+Radius: 10      Amount: 9       Result: 399
+Radius: 10      Amount: 10      Result: 399
+
+delta = 2 * radius
+Radius: 10      Amount: 1       Result: 399
+Radius: 10      Amount: 2       Result: 399
+Radius: 10      Amount: 3       Result: 399
+Radius: 10      Amount: 4       Result: 399
+Radius: 10      Amount: 5       Result: 399
+Radius: 10      Amount: 6       Result: 399
+Radius: 10      Amount: 7       Result: 399
+Radius: 10      Amount: 8       Result: 399
+Radius: 10      Amount: 9       Result: 399
+Radius: 10      Amount: 10      Result: 399
+
+delta = 3 * radius
+Radius: 10      Amount: 1       Result: 399
+Radius: 10      Amount: 2       Result: 399
+Radius: 10      Amount: 3       Result: 399
+Radius: 10      Amount: 4       Result: 399
+Radius: 10      Amount: 5       Result: 399
+Radius: 10      Amount: 6       Result: 399
+Radius: 10      Amount: 7       Result: 399
+Radius: 10      Amount: 8       Result: 399
+Radius: 10      Amount: 9       Result: 399
+Radius: 10      Amount: 10      Result: 399

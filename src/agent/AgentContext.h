@@ -15,6 +15,13 @@ class Agent;
 class AgentInitializationException;
 class CoordinatorAssignationException;
 
+struct AgentInfo
+{
+    Point position;
+    bool isCoordinator;
+    std::optional<Point> target;
+};
+
 class AgentContext
 {
 public:
@@ -33,7 +40,7 @@ public:
     const Coordinator* GetCoordinator() const noexcept;
     const Grid& GetMap() const noexcept;
     size_t GetSimulationTime() const noexcept;
-    std::vector<std::pair<Point, bool>> GetAgentInfos() const;
+    std::vector<AgentInfo> GetAgentInfos() const;
 
     void IterateOverAgents(const std::function<void()>& onStep = nullptr);
 

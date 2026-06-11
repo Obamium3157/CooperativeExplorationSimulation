@@ -21,6 +21,8 @@ public:
     const Grid& GetLocalBeliefMap() const noexcept;
     const Cell& GetPosition() const noexcept;
     bool HasArrived() const noexcept;
+    std::optional<Point> GetTarget() const noexcept;
+
 
     virtual void Act();
     void ApplyGbm();

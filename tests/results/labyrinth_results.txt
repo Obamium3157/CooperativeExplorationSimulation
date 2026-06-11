@@ -1,0 +1,299 @@
+delta = 0
+Radius: 1       Amount: 1       Result: 270
+Radius: 1       Amount: 2       Result: 168
+Radius: 1       Amount: 3       Result: 130
+Radius: 1       Amount: 4       Result: 87
+Radius: 1       Amount: 5       Result: 94
+Radius: 1       Amount: 6       Result: 130
+Radius: 1       Amount: 7       Result: 108
+Radius: 1       Amount: 8       Result: 152
+Radius: 1       Amount: 9       Result: 75
+Radius: 1       Amount: 10      Result: 84
+
+delta = 1
+Radius: 1       Amount: 1       Result: 270
+Radius: 1       Amount: 2       Result: 168
+Radius: 1       Amount: 3       Result: 130
+Radius: 1       Amount: 4       Result: 87
+Radius: 1       Amount: 5       Result: 94
+Radius: 1       Amount: 6       Result: 130
+Radius: 1       Amount: 7       Result: 108
+Radius: 1       Amount: 8       Result: 152
+Radius: 1       Amount: 9       Result: 75
+Radius: 1       Amount: 10      Result: 84
+
+delta = radius
+Radius: 1       Amount: 1       Result: 270
+Radius: 1       Amount: 2       Result: 168
+Radius: 1       Amount: 3       Result: 130
+Radius: 1       Amount: 4       Result: 87
+Radius: 1       Amount: 5       Result: 94
+Radius: 1       Amount: 6       Result: 130
+Radius: 1       Amount: 7       Result: 108
+Radius: 1       Amount: 8       Result: 152
+Radius: 1       Amount: 9       Result: 75
+Radius: 1       Amount: 10      Result: 84
+
+delta = 2 * radius
+Radius: 1       Amount: 1       Result: 270
+Radius: 1       Amount: 2       Result: 168
+Radius: 1       Amount: 3       Result: 130
+Radius: 1       Amount: 4       Result: 87
+Radius: 1       Amount: 5       Result: 94
+Radius: 1       Amount: 6       Result: 130
+Radius: 1       Amount: 7       Result: 108
+Radius: 1       Amount: 8       Result: 152
+Radius: 1       Amount: 9       Result: 75
+Radius: 1       Amount: 10      Result: 84
+
+delta = 3 * radius
+Radius: 1       Amount: 1       Result: 270
+Radius: 1       Amount: 2       Result: 168
+Radius: 1       Amount: 3       Result: 130
+Radius: 1       Amount: 4       Result: 87
+Radius: 1       Amount: 5       Result: 94
+Radius: 1       Amount: 6       Result: 130
+Radius: 1       Amount: 7       Result: 108
+Radius: 1       Amount: 8       Result: 152
+Radius: 1       Amount: 9       Result: 75
+Radius: 1       Amount: 10      Result: 84
+
+delta = 0
+Radius: 2       Amount: 1       Result: 182
+Radius: 2       Amount: 2       Result: 128
+Radius: 2       Amount: 3       Result: 101
+Radius: 2       Amount: 4       Result: 101
+Radius: 2       Amount: 5       Result: 98
+Radius: 2       Amount: 6       Result: 86
+Radius: 2       Amount: 7       Result: 74
+Radius: 2       Amount: 8       Result: 74
+Radius: 2       Amount: 9       Result: 82
+Radius: 2       Amount: 10      Result: 82
+
+delta = 1
+Radius: 2       Amount: 1       Result: 182
+Radius: 2       Amount: 2       Result: 128
+Radius: 2       Amount: 3       Result: 101
+Radius: 2       Amount: 4       Result: 101
+Radius: 2       Amount: 5       Result: 98
+Radius: 2       Amount: 6       Result: 86
+Radius: 2       Amount: 7       Result: 74
+Radius: 2       Amount: 8       Result: 74
+Radius: 2       Amount: 9       Result: 82
+Radius: 2       Amount: 10      Result: 82
+
+delta = radius
+Radius: 2       Amount: 1       Result: 182
+Radius: 2       Amount: 2       Result: 128
+Radius: 2       Amount: 3       Result: 101
+Radius: 2       Amount: 4       Result: 101
+Radius: 2       Amount: 5       Result: 98
+Radius: 2       Amount: 6       Result: 86
+Radius: 2       Amount: 7       Result: 74
+Radius: 2       Amount: 8       Result: 74
+Radius: 2       Amount: 9       Result: 82
+Radius: 2       Amount: 10      Result: 82
+
+delta = 2 * radius
+Radius: 2       Amount: 1       Result: 182
+Radius: 2       Amount: 2       Result: 128
+Radius: 2       Amount: 3       Result: 101
+Radius: 2       Amount: 4       Result: 101
+Radius: 2       Amount: 5       Result: 98
+Radius: 2       Amount: 6       Result: 86
+Radius: 2       Amount: 7       Result: 74
+Radius: 2       Amount: 8       Result: 74
+Radius: 2       Amount: 9       Result: 82
+Radius: 2       Amount: 10      Result: 82
+
+delta = 3 * radius
+Radius: 2       Amount: 1       Result: 182
+Radius: 2       Amount: 2       Result: 128
+Radius: 2       Amount: 3       Result: 101
+Radius: 2       Amount: 4       Result: 101
+Radius: 2       Amount: 5       Result: 98
+Radius: 2       Amount: 6       Result: 86
+Radius: 2       Amount: 7       Result: 74
+Radius: 2       Amount: 8       Result: 74
+Radius: 2       Amount: 9       Result: 82
+Radius: 2       Amount: 10      Result: 82
+
+delta = 0
+Radius: 5       Amount: 1       Result: 126
+Radius: 5       Amount: 2       Result: 117
+Radius: 5       Amount: 3       Result: 105
+Radius: 5       Amount: 4       Result: 105
+Radius: 5       Amount: 5       Result: 105
+Radius: 5       Amount: 6       Result: 105
+Radius: 5       Amount: 7       Result: 105
+Radius: 5       Amount: 8       Result: 105
+Radius: 5       Amount: 9       Result: 105
+Radius: 5       Amount: 10      Result: 105
+
+delta = 1
+Radius: 5       Amount: 1       Result: 126
+Radius: 5       Amount: 2       Result: 117
+Radius: 5       Amount: 3       Result: 105
+Radius: 5       Amount: 4       Result: 105
+Radius: 5       Amount: 5       Result: 105
+Radius: 5       Amount: 6       Result: 105
+Radius: 5       Amount: 7       Result: 105
+Radius: 5       Amount: 8       Result: 105
+Radius: 5       Amount: 9       Result: 105
+Radius: 5       Amount: 10      Result: 105
+
+delta = radius
+Radius: 5       Amount: 1       Result: 126
+Radius: 5       Amount: 2       Result: 117
+Radius: 5       Amount: 3       Result: 105
+Radius: 5       Amount: 4       Result: 105
+Radius: 5       Amount: 5       Result: 105
+Radius: 5       Amount: 6       Result: 105
+Radius: 5       Amount: 7       Result: 105
+Radius: 5       Amount: 8       Result: 105
+Radius: 5       Amount: 9       Result: 105
+Radius: 5       Amount: 10      Result: 105
+
+delta = 2 * radius
+Radius: 5       Amount: 1       Result: 126
+Radius: 5       Amount: 2       Result: 117
+Radius: 5       Amount: 3       Result: 105
+Radius: 5       Amount: 4       Result: 105
+Radius: 5       Amount: 5       Result: 105
+Radius: 5       Amount: 6       Result: 105
+Radius: 5       Amount: 7       Result: 105
+Radius: 5       Amount: 8       Result: 105
+Radius: 5       Amount: 9       Result: 105
+Radius: 5       Amount: 10      Result: 105
+
+delta = 3 * radius
+Radius: 5       Amount: 1       Result: 126
+Radius: 5       Amount: 2       Result: 117
+Radius: 5       Amount: 3       Result: 105
+Radius: 5       Amount: 4       Result: 105
+Radius: 5       Amount: 5       Result: 105
+Radius: 5       Amount: 6       Result: 105
+Radius: 5       Amount: 7       Result: 105
+Radius: 5       Amount: 8       Result: 105
+Radius: 5       Amount: 9       Result: 105
+Radius: 5       Amount: 10      Result: 105
+
+delta = 0
+Radius: 8       Amount: 1       Result: 100
+Radius: 8       Amount: 2       Result: 99
+Radius: 8       Amount: 3       Result: 99
+Radius: 8       Amount: 4       Result: 99
+Radius: 8       Amount: 5       Result: 99
+Radius: 8       Amount: 6       Result: 99
+Radius: 8       Amount: 7       Result: 99
+Radius: 8       Amount: 8       Result: 99
+Radius: 8       Amount: 9       Result: 99
+Radius: 8       Amount: 10      Result: 99
+
+delta = 1
+Radius: 8       Amount: 1       Result: 100
+Radius: 8       Amount: 2       Result: 99
+Radius: 8       Amount: 3       Result: 99
+Radius: 8       Amount: 4       Result: 99
+Radius: 8       Amount: 5       Result: 99
+Radius: 8       Amount: 6       Result: 99
+Radius: 8       Amount: 7       Result: 99
+Radius: 8       Amount: 8       Result: 99
+Radius: 8       Amount: 9       Result: 99
+Radius: 8       Amount: 10      Result: 99
+
+delta = radius
+Radius: 8       Amount: 1       Result: 100
+Radius: 8       Amount: 2       Result: 99
+Radius: 8       Amount: 3       Result: 99
+Radius: 8       Amount: 4       Result: 99
+Radius: 8       Amount: 5       Result: 99
+Radius: 8       Amount: 6       Result: 99
+Radius: 8       Amount: 7       Result: 99
+Radius: 8       Amount: 8       Result: 99
+Radius: 8       Amount: 9       Result: 99
+Radius: 8       Amount: 10      Result: 99
+
+delta = 2 * radius
+Radius: 8       Amount: 1       Result: 100
+Radius: 8       Amount: 2       Result: 99
+Radius: 8       Amount: 3       Result: 99
+Radius: 8       Amount: 4       Result: 99
+Radius: 8       Amount: 5       Result: 99
+Radius: 8       Amount: 6       Result: 99
+Radius: 8       Amount: 7       Result: 99
+Radius: 8       Amount: 8       Result: 99
+Radius: 8       Amount: 9       Result: 99
+Radius: 8       Amount: 10      Result: 99
+
+delta = 3 * radius
+Radius: 8       Amount: 1       Result: 100
+Radius: 8       Amount: 2       Result: 99
+Radius: 8       Amount: 3       Result: 99
+Radius: 8       Amount: 4       Result: 99
+Radius: 8       Amount: 5       Result: 99
+Radius: 8       Amount: 6       Result: 99
+Radius: 8       Amount: 7       Result: 99
+Radius: 8       Amount: 8       Result: 99
+Radius: 8       Amount: 9       Result: 99
+Radius: 8       Amount: 10      Result: 99
+
+delta = 0
+Radius: 10      Amount: 1       Result: 119
+Radius: 10      Amount: 2       Result: 94
+Radius: 10      Amount: 3       Result: 94
+Radius: 10      Amount: 4       Result: 94
+Radius: 10      Amount: 5       Result: 94
+Radius: 10      Amount: 6       Result: 94
+Radius: 10      Amount: 7       Result: 94
+Radius: 10      Amount: 8       Result: 94
+Radius: 10      Amount: 9       Result: 94
+Radius: 10      Amount: 10      Result: 94
+
+delta = 1
+Radius: 10      Amount: 1       Result: 119
+Radius: 10      Amount: 2       Result: 94
+Radius: 10      Amount: 3       Result: 94
+Radius: 10      Amount: 4       Result: 94
+Radius: 10      Amount: 5       Result: 94
+Radius: 10      Amount: 6       Result: 94
+Radius: 10      Amount: 7       Result: 94
+Radius: 10      Amount: 8       Result: 94
+Radius: 10      Amount: 9       Result: 94
+Radius: 10      Amount: 10      Result: 94
+
+delta = radius
+Radius: 10      Amount: 1       Result: 119
+Radius: 10      Amount: 2       Result: 94
+Radius: 10      Amount: 3       Result: 94
+Radius: 10      Amount: 4       Result: 94
+Radius: 10      Amount: 5       Result: 94
+Radius: 10      Amount: 6       Result: 94
+Radius: 10      Amount: 7       Result: 94
+Radius: 10      Amount: 8       Result: 94
+Radius: 10      Amount: 9       Result: 94
+Radius: 10      Amount: 10      Result: 94
+
+delta = 2 * radius
+Radius: 10      Amount: 1       Result: 119
+Radius: 10      Amount: 2       Result: 94
+Radius: 10      Amount: 3       Result: 94
+Radius: 10      Amount: 4       Result: 94
+Radius: 10      Amount: 5       Result: 94
+Radius: 10      Amount: 6       Result: 94
+Radius: 10      Amount: 7       Result: 94
+Radius: 10      Amount: 8       Result: 94
+Radius: 10      Amount: 9       Result: 94
+Radius: 10      Amount: 10      Result: 94
+
+delta = 3 * radius
+Radius: 10      Amount: 1       Result: 119
+Radius: 10      Amount: 2       Result: 94
+Radius: 10      Amount: 3       Result: 94
+Radius: 10      Amount: 4       Result: 94
+Radius: 10      Amount: 5       Result: 94
+Radius: 10      Amount: 6       Result: 94
+Radius: 10      Amount: 7       Result: 94
+Radius: 10      Amount: 8       Result: 94
+Radius: 10      Amount: 9       Result: 94
+Radius: 10      Amount: 10      Result: 94
