@@ -6,9 +6,10 @@
 ```mermaid
 classDiagram
     class Point {
-        +size_t x
-        +size_t y
-        +bool operator==(Point other)
+        + x: size_t
+        + y: size_t
+        
+        + bool operator==(Point other)
     }
 
     class CellState {
@@ -20,36 +21,37 @@ classDiagram
     }
 
     class Cell {
-        +Point position
-        +CellState state
+        + position: Point
+        + state: CellState
     }
 
     class Grid {
-        -GridMatrix m_grid
-        +GetCell(Point) Cell
-        +SetCell(Point, Cell) void
-        +GetDimensions() Point
-        +GetGridMatrix() GridMatrix
-        +MergeFrom(Grid) void
+        - m_grid: GridMatrix
+        
+        + GetCell(Point) Cell
+        + SetCell(Point, Cell) void
+        + GetDimensions() Point
+        + GetGridMatrix() GridMatrix
+        + MergeFrom(Grid) void
     }
 
     class Frontier {
         <<utility>>
-        +ComputeFrontiers(Grid)$ vector~Point~
-        +IsFrontierCell(Point, Grid)$ bool
-        +OrthogonalNeighbors(Point, Point)$ vector~Point~
+        + ComputeFrontiers(Grid) vector~Point~
+        + IsFrontierCell(Point, Grid) bool
+        + OrthogonalNeighbors(Point, Point) vector~Point~
     }
 
     class Perception {
         <<utility>>
-        +GetPerceivedCells(Point, double, Grid)$ vector~Cell~
-        +HasLineOfSight(Point, Point, Grid)$ bool
+        + GetPerceivedCells(Point, double, Grid) vector~Cell~
+        + HasLineOfSight(Point, Point, Grid) bool
     }
 
     class Pathfinding {
         <<utility>>
-        +FindPath(Point, Point, Grid)$ optional~Path~
-        +FindPathLength(Point, Point, Grid)$ optional~size_t~
+        + FindPath(Point, Point, Grid) optional~Path~
+        + FindPathLength(Point, Point, Grid) optional~size_t~
     }
 
     Cell *-- Point
@@ -70,10 +72,11 @@ classDiagram
 classDiagram
     direction LR
     class DataBus {
-        -size_t m_agentCount
-        -map~size_t, Grid*~ m_pendingLbms
-        -Grid* m_currentGbm
-        -map~size_t, Point~ m_pendingTargets
+        - m_agentCount: size_t
+        - m_pendingLbms: map~size_t, Grid*~
+        - m_currentGbm: Grid*
+        - m_pendingTargets: map~size_t, Point~
+        
         +SubmitLbm(size_t, Grid) void
         +AreAllLbmsReady() bool
         +GetPendingLbms() map
@@ -85,30 +88,32 @@ classDiagram
     }
 
     class Agent {
-        -size_t m_id
-        -Grid m_localBeliefMap
-        -Cell m_currentCell
-        -vector~Point~ m_currentPath
-        -double m_perceptionRadius
-        -bool m_hasArrived
-        +GetId() size_t
-        +GetPosition() Cell
-        +GetLocalBeliefMap() Grid
-        +HasArrived() bool
-        +Act() void
-        +ApplyGbm() void
-        +ReceiveAndPlanTarget() void
-        +Step() void
-        +Perceive() void
+        - m_id: size_t
+        - m_localBeliefMap: Grid
+        - m_currentCell: Cell
+        - m_currentPath: vector~Point~
+        - m_perceptionRadius: double
+        - m_hasArrived: bool
+        
+        + GetId() size_t
+        + GetPosition() Cell
+        + GetLocalBeliefMap() Grid
+        + HasArrived() bool
+        + Act() void
+        + ApplyGbm() void
+        + ReceiveAndPlanTarget() void
+        + Step() void
+        + Perceive() void
     }
 
     class Coordinator {
-        -Grid m_globalBeliefMap
-        -vector~Point~ m_frontiers
-        +SynchronizeGlobalMap() void
-        +AssignTargets() void
-        +GetGlobalBeliefMap() Grid
-        +GetFrontiers() vector~Point~
+        - m_globalBeliefMap: Grid
+        - m_frontiers: vector~Point~
+        
+        + SynchronizeGlobalMap() void
+        + AssignTargets() void
+        + GetGlobalBeliefMap() Grid
+        + GetFrontiers() vector~Point~
     }
 
     class AgentContext {
@@ -126,28 +131,29 @@ classDiagram
 ```mermaid
 classDiagram
     class AgentContext {
-        -DataBus m_dataBus
-        -map~size_t, Agent*~ m_agentById
-        -Coordinator* m_coordinator
-        -Grid m_map
-        -size_t m_pendingAgentCount
-        -size_t m_simulationTime
-        +IterateOverAgents() void
-        +GetCoordinator() Coordinator*
-        +GetMap() Grid
-        +GetSimulationTime() size_t
-        +GetAgentInfos() vector~AgentInfo~
-        +GetAgent(size_t) Agent*
+        - m_dataBus: DataBus 
+        - m_agentById: map~size_t, Agent*~
+        - m_coordinator: Coordinator*
+        - m_map: Grid
+        - m_pendingAgentCount: size_t
+        - m_simulationTime: size_t
+        
+        + IterateOverAgents() void
+        + GetCoordinator() Coordinator*
+        + GetMap() Grid
+        + GetSimulationTime() size_t
+        + GetAgentInfos() vector~AgentInfo~
+        + GetAgent(size_t) Agent*
     }
 
     class Simulation {
-        -Grid m_map
-        -unique_ptr~AgentContext~ m_context
-        -unique_ptr~IDrawable~ m_drawable
-        +Run() void
-        -LoadGridFromFile(path) GridMatrix
-        -MakeDrawable(DrawableVariant) IDrawable*
-        -BuildAgentOverlay() vector
+        - m_map: Grid
+        - m_context: unique_ptr~AgentContext~
+        - m_drawable: unique_ptr~IDrawable~
+        + Run() void
+        - LoadGridFromFile(path) GridMatrix
+        - MakeDrawable(DrawableVariant) IDrawable*
+        - BuildAgentOverlay() vector
     }
 
     class DrawableVariant {
@@ -203,24 +209,38 @@ classDiagram
     }
 
     class ConsoleDrawer {
-        -ostream m_out
-        +Draw(Grid, vector~pair~) void
+        - m_out: ostream
+        
+        + Draw(Grid, vector~pair~) void
     }
 
     class GUIDrawer {
+        - m_window: unique_ptr~sf::RenderWindow~;
+        - m_agentColors: vector~sf::Color~;
+        - m_rng: mt19937;
+        - m_sleepTime: unsigned int;
+        
         +Draw(Grid, vector~pair~) void
     }
 
     class DrawableCharacters {
         <<constants>>
-        +char Unknown$
-        +char Free$
-        +char Obstacle$
-        +char Agent$
-        +char Coordinator$
-        +char GridCorner$
-        +char GridBorderVertical$
-        +char GridBorderHorizontal$
+        + Unknown: char 
+        + Free: char 
+        + Obstacle: char 
+        + Agent: char
+        + Coordinator: char 
+        + GridCorner: char
+        + GridBorderVertical: char 
+        + GridBorderHorizontal: char
+    }
+    
+    class SimulationColors {
+        <<constants>>
+        + UnknownColor: sf::Color
+        + FreeColor: sf::Color
+        + ObstacleColor: sf::Color
+        + AgentColor: sf::Color
     }
 
     class Grid {
@@ -233,8 +253,10 @@ classDiagram
 
     ConsoleDrawer --|> IDrawable
     GUIDrawer --|> IDrawable
+    GUIDrawer ..> SimulationColors
     ConsoleDrawer ..> DrawableCharacters
     ConsoleDrawer ..> Grid
     ConsoleDrawer ..> Cell
     IDrawable ..> Grid
+
 ```

@@ -15,8 +15,8 @@ namespace
 
     sf::Vector2f CellTopLeft(const Point& point)
     {
-        const float x = static_cast<float>(point.x * (cellSize + lineThickness) + lineThickness);
-        const float y = static_cast<float>(point.y * (cellSize + lineThickness) + lineThickness);
+        const auto x = static_cast<float>(point.x * (cellSize + lineThickness) + lineThickness);
+        const auto y = static_cast<float>(point.y * (cellSize + lineThickness) + lineThickness);
 
         return {x, y};
     }

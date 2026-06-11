@@ -11,7 +11,7 @@ size_t RunSimulation(const std::filesystem::path& filename, const Point initialP
         r,
         delta,
         DrawableVariant::GUI,
-        500);
+        1);
 
     return simulation.Run();
 }
@@ -34,10 +34,12 @@ int main()
 {
     try
     {
-        // RunSimulation("open_field.txt", {Point{0, 0}, Point{24, 0}, Point{0, 24}, Point{24, 24}}, 5, 2 * 5);
-        // RunSimulation("open_field.txt", Point{0, 0}, 6, 5, 5 * 2);
-        // RunSimulation("snail.txt", Point{0, 0}, 1, 5, 5 * 2);
-        RunSimulation("test_map2.txt", {Point{1, 1}, Point{15, 12}}, 5, 2 * 5);
+        std::cout << RunSimulation("open_field.txt", {Point{0, 0}, Point{24, 0}, Point{0, 24}, Point{24, 24}}, 5, 2 * 5) << "\n";
+        // std::cout << RunSimulation("open_field.txt", Point{0, 0}, 6, 5, 5 * 2) << "\n";
+        // std::cout << RunSimulation("snail.txt", Point{0, 0}, 1, 5, 5 * 2) << "\n";
+        // std::cout << RunSimulation("test_map2.txt", {Point{1, 1}, Point{15, 12}}, 5, 2 * 5) << "\n";
+        // std::cout << RunSimulation("brush.txt", Point{0, 0}, 1, 5, 2 * 5) << "\n";
+        // std::cout << RunSimulation("tube.txt", Point{0, 0}, 1, 5, 2 * 5) << "\n";
     }
     catch (std::exception& e)
     {
