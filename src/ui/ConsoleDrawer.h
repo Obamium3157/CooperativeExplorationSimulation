@@ -14,7 +14,7 @@ struct Cell;
 class ConsoleDrawer : public IDrawable
 {
 public:
-    explicit ConsoleDrawer(std::ostream& out);
+    explicit ConsoleDrawer(std::ostream& out, unsigned int sleepTime);
     void Draw(const Grid& grid,
               const std::vector<std::pair<Point, char>>& agentOverlay) override;
 
@@ -23,6 +23,7 @@ private:
     void DrawCell(const Cell& cell) const;
 
     std::ostream& m_out;
+    unsigned int m_sleepTime;
 };
 
 std::ostream& operator<<(std::ostream& os, const CellState& cellState);

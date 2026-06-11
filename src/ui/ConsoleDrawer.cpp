@@ -1,17 +1,30 @@
 #include <algorithm>
+#include <chrono>
 #include <iostream>
+#include <thread>
 #include "ConsoleDrawer.h"
 #include "DrawableCharacters.h"
 #include "../environment/Grid.h"
 
-ConsoleDrawer::ConsoleDrawer(std::ostream& out)
+namespace
+{
+    void ClearConsole(std::ostream& m_out)
+    {
+        m_out << "\033[2J\033[1;1H";
+    }
+}
+
+ConsoleDrawer::ConsoleDrawer(std::ostream& out, const unsigned int sleepTime)
     : m_out(out)
+    , m_sleepTime(sleepTime)
 {
 }
 
 void ConsoleDrawer::Draw(const Grid& grid,
                          const std::vector<std::pair<Point, char>>& agentOverlay)
 {
+    ClearConsole(m_out);
+
     const auto [width, height] = grid.GetDimensions();
 
     DrawHorizontalBorder(width);
@@ -39,6 +52,9 @@ void ConsoleDrawer::Draw(const Grid& grid,
     }
 
     DrawHorizontalBorder(width);
+    m_out << '\n';
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(m_sleepTime));
 }
 
 void ConsoleDrawer::DrawHorizontalBorder(const unsigned int width) const

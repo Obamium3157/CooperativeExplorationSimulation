@@ -15,6 +15,8 @@ public:
 
     virtual void Draw(const Grid& grid,
                       const std::vector<std::pair<Point, char>>& agentOverlay) = 0;
+
+    virtual void OnSimulationFinished() {}
 };
 
 #endif //COOPERATIVEEXPLORATIONSIMULATION_IDRAWABLE_H

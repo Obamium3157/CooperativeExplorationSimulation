@@ -11,6 +11,9 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
+set(SFML_DIR "C:/SFML-3-0-0/SFML-3.0.0/lib/cmake/SFML")
+find_package(SFML 3 COMPONENTS Graphics Window System REQUIRED PATHS "${SFML_DIR}" NO_DEFAULT_PATH)
+
 add_executable(CooperativeExplorationSimulation src/main.cpp
         src/environment/CellState.h
         src/environment/Cell.h
@@ -42,6 +45,7 @@ add_executable(CooperativeExplorationSimulation src/main.cpp
         src/environment/Frontier.h
         src/environment/Pathfinding.cpp
         src/environment/Pathfinding.h
+        src/ui/SimulationColors.h
 )
 
 add_executable(BresenhamPerceptionTests tests/BresenhamPerceptionTests.cpp
@@ -85,3 +89,10 @@ target_link_libraries(MergeTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(FrontierTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(PathfindingTests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(DataBusTests PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(CooperativeExplorationSimulation PRIVATE SFML::Graphics SFML::Window SFML::System)
+
+add_custom_command(TARGET CooperativeExplorationSimulation POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "C:/SFML-3-0-0/SFML-3.0.0/bin"
+        $<TARGET_FILE_DIR:CooperativeExplorationSimulation>
+)

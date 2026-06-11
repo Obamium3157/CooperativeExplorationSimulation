@@ -37,30 +37,33 @@ Simulation::Simulation(const std::filesystem::path& filename,
         const std::vector<Point>& agentPositions,
         const size_t r,
         const double delta,
-        const DrawableVariant variant)
+        const DrawableVariant variant,
+        const unsigned int sleepTime)
     : m_map(LoadGridFromFile(filename))
     , m_context(std::make_unique<AgentContext>(m_map, agentPositions, agentPositions.size() - 1, r, delta))
-    , m_drawable(MakeDrawable(variant))
+    , m_drawable(MakeDrawable(variant, sleepTime))
 {
 }
 
 size_t Simulation::Run() const
 {
-    // const auto onStep = [this]()
-    // {
-    //     if (const auto coordinator = m_context->GetCoordinator(); coordinator)
-    //     {
-    //         m_drawable->Draw(coordinator->GetGlobalBeliefMap(), BuildAgentOverlay());
-    //         std::cout << "\n";
-    //     }
-    // };
-    const auto onStep = [] {};
+    const auto onStep = [this]()
+    {
+        if (const auto coordinator = m_context->GetCoordinator(); coordinator)
+        {
+            m_drawable->Draw(coordinator->GetGlobalBeliefMap(), BuildAgentOverlay());
+        }
+    };
+    // const auto onStep = [] {};
 
     m_context->IterateOverAgents(onStep);
     while (!m_context->GetCoordinator()->GetFrontiers().empty())
     {
         m_context->IterateOverAgents(onStep);
     }
+    onStep();
+
+    m_drawable->OnSimulationFinished();
 
     return m_context->GetSimulationTime();
 }
@@ -127,13 +130,13 @@ GridMatrix Simulation::LoadGridFromFile(const std::filesystem::path& filename)
     return matrix;
 }
 
-std::unique_ptr<IDrawable> Simulation::MakeDrawable(const DrawableVariant variant)
+std::unique_ptr<IDrawable> Simulation::MakeDrawable(const DrawableVariant variant, const unsigned int sleepTime)
 {
     switch (variant)
     {
-    case DrawableVariant::Console: return std::make_unique<ConsoleDrawer>(std::cout);
-    case DrawableVariant::GUI: return std::make_unique<GUIDrawer>();
-    default: return std::make_unique<ConsoleDrawer>(std::cout);
+    case DrawableVariant::Console: return std::make_unique<ConsoleDrawer>(std::cout, sleepTime);
+    case DrawableVariant::GUI: return std::make_unique<GUIDrawer>(sleepTime);
+    default: return std::make_unique<ConsoleDrawer>(std::cout, sleepTime);
     }
 }
 

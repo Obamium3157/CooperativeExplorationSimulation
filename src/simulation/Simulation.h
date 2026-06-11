@@ -23,7 +23,8 @@ public:
         const std::vector<Point>& agentPositions,
         size_t r,
         double delta,
-        DrawableVariant variant);
+        DrawableVariant variant,
+        unsigned int sleepTime);
 
     size_t Run() const;
 private:
@@ -32,7 +33,7 @@ private:
      * @throws ReadGridException if file contains undefined character
      */
     static GridMatrix LoadGridFromFile(const std::filesystem::path& filename);
-    static std::unique_ptr<IDrawable> MakeDrawable(DrawableVariant variant);
+    static std::unique_ptr<IDrawable> MakeDrawable(DrawableVariant variant, unsigned int sleepTime);
     std::vector<std::pair<Point, char>> BuildAgentOverlay() const;
 
     Grid m_map;
