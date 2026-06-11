@@ -12,7 +12,7 @@ struct AgentOverlayEntry
 {
     Point position;
     char type;
-    std::optional<Point> target;
+    std::vector<Point> path;
 };
 
 class IDrawable

@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
+#include <iostream>
 #include <queue>
 #include <unordered_set>
 
@@ -274,6 +275,8 @@ namespace
                              const PositionMap& currentPositions,
                              const size_t clusteringDistance)
     {
+        std::cout << "Step 4\n";
+        std::cout << "\tAssignments amount: " << assignments.size() << '\n';
         std::vector<size_t> agentIds;
         agentIds.reserve(assignments.size());
         for (const auto& id : assignments | std::views::keys)
@@ -371,6 +374,8 @@ namespace
             assignments.erase(agentId);
         }
 
+        std::cout << "\tAfter prune: " << assignments.size() << '\n';
+
         return assignments;
     }
 }
@@ -423,6 +428,15 @@ void Coordinator::AssignTargets()
     {
         return;
     }
+
+    if (step2.size() == 1)
+    {
+        const auto& [agentId, cands] = *step2.begin();
+        m_dataBus.SubmitTarget(agentId, cands.front());
+
+        return;
+    }
+
 
     const Assignment step3 = SelectByMaxArea(step2);
     const Assignment step4 = PruneClusters(

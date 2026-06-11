@@ -87,7 +87,7 @@ std::vector<AgentInfo> AgentContext::GetAgentInfos() const
     for (const auto& [id, agent] : m_agentById)
     {
         const bool isCoordinator = (agent.get() == m_coordinator);
-        infos.emplace_back(agent->GetPosition().position, isCoordinator, agent->GetTarget());
+        infos.emplace_back(agent->GetPosition().position, isCoordinator, agent->GetPath());
     }
     return infos;
 }

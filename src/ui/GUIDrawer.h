@@ -23,6 +23,8 @@ private:
     void InitializeWindow(unsigned int gridWidth, unsigned int gridHeight);
     void HandleEvents() const;
     void DrawCells(const Grid& grid) const;
+    void DrawAgentPath(const std::vector<Point>& path, sf::Color agentColor) const;
+    void DrawAgentPaths(const std::vector<AgentOverlayEntry>& agentOverlay) const;
     void DrawAgentTarget(sf::Vector2f cellTopLeft, sf::Color agentColor) const;
     void DrawAgentTargets(const std::vector<AgentOverlayEntry>& agentOverlay) const;
     void DrawAgents(const std::vector<AgentOverlayEntry>& agentOverlay) const;

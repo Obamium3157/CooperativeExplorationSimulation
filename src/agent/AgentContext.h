@@ -19,7 +19,7 @@ struct AgentInfo
 {
     Point position;
     bool isCoordinator;
-    std::optional<Point> target;
+    std::vector<Point> path;
 };
 
 class AgentContext

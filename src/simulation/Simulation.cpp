@@ -146,15 +146,15 @@ std::vector<AgentOverlayEntry> Simulation::BuildAgentOverlay() const
     std::vector<AgentOverlayEntry> overlay;
     overlay.reserve(agentInfos.size());
 
-    for (const auto& [position, isCoordinator, target] : agentInfos)
+    for (const auto& [position, isCoordinator, path] : agentInfos)
     {
         if (isCoordinator)
         {
-            overlay.emplace_back(position, DrawableCharacter::Coordinator, target);
+            overlay.emplace_back(position, DrawableCharacter::Coordinator, path);
         }
         else
         {
-            overlay.emplace_back(position, DrawableCharacter::Agent, target);
+            overlay.emplace_back(position, DrawableCharacter::Agent, path);
         }
     }
 

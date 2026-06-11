@@ -36,13 +36,9 @@ bool Agent::HasArrived() const noexcept
     return m_hasArrived;
 }
 
-std::optional<Point> Agent::GetTarget() const noexcept
+std::vector<Point> Agent::GetPath() const noexcept
 {
-    if (m_hasArrived || m_currentPath.empty())
-    {
-        return std::nullopt;
-    }
-    return m_currentPath.front();
+    return m_currentPath;
 }
 
 void Agent::Act()

@@ -48,6 +48,7 @@ void GUIDrawer::Draw(const Grid& grid,
 
     m_window->clear(sf::Color::Black);
     DrawCells(grid);
+    DrawAgentPaths(agentOverlay);
     DrawAgentTargets(agentOverlay);
     DrawAgents(agentOverlay);
     m_window->display();
@@ -133,6 +134,35 @@ void GUIDrawer::DrawCells(const Grid& grid) const
     }
 }
 
+void GUIDrawer::DrawAgentPath(const std::vector<Point>& path, const sf::Color agentColor) const
+{
+    constexpr float dotRadius = 3.0f;
+    constexpr float dotOffset = static_cast<float>(cellSize) / 2.0f - dotRadius;
+
+    sf::CircleShape dot(dotRadius);
+    dot.setFillColor(agentColor);
+
+    for (const auto& point : path)
+    {
+        const sf::Vector2f topLeft = CellTopLeft(point);
+        dot.setPosition({topLeft.x + dotOffset, topLeft.y + dotOffset});
+        dot.setOutlineColor(sf::Color::Black);
+        dot.setOutlineThickness(1.0f);
+        m_window->draw(dot);
+    }
+}
+
+void GUIDrawer::DrawAgentPaths(const std::vector<AgentOverlayEntry>& agentOverlay) const
+{
+    for (size_t i = 0; i < agentOverlay.size(); ++i)
+    {
+        if (!agentOverlay[i].path.empty())
+        {
+            DrawAgentPath(agentOverlay[i].path, m_agentColors[i]);
+        }
+    }
+}
+
 void GUIDrawer::DrawAgentTarget(const sf::Vector2f cellTopLeft, const sf::Color agentColor) const
 {
     constexpr float markerSize = static_cast<float>(cellSize) / 2.0f;
@@ -173,11 +203,11 @@ void GUIDrawer::DrawAgentTargets(const std::vector<AgentOverlayEntry>& agentOver
 {
     for (size_t i = 0; i < agentOverlay.size(); ++i)
     {
-        if (!agentOverlay[i].target.has_value())
+        if (agentOverlay[i].path.empty())
         {
             continue;
         }
-        DrawAgentTarget(CellTopLeft(*agentOverlay[i].target), m_agentColors[i]);
+        DrawAgentTarget(CellTopLeft(agentOverlay[i].path.front()), m_agentColors[i]);
     }
 }
 
@@ -205,9 +235,9 @@ void GUIDrawer::EnsureAgentColors(const size_t requiredCount)
 sf::Color GUIDrawer::GenerateRandomColor()
 {
     std::uniform_int_distribution<int> dist(80, 255);
-    return sf::Color(
+    return {
         static_cast<uint8_t>(dist(m_rng)),
         static_cast<uint8_t>(dist(m_rng)),
         static_cast<uint8_t>(dist(m_rng))
-    );
+    };
 }
