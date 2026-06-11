@@ -372,8 +372,6 @@ namespace
             assignments.erase(agentId);
         }
 
-        std::cout << "\tAfter prune: " << assignments.size() << '\n';
-
         return assignments;
     }
 }
